@@ -65,7 +65,7 @@
                     <div class="product-list-small animate__fast">
                         <article class="flex mb-5">
                             <figure class="md:w-1/3 mb-0">
-                                <a href="#">
+                                <a href="register.php">
                                     <img src="{{ asset('assets/pasta2.jpg') }}" alt="test"></a>
                             </figure>
                             <div class="md:w-8/12 mb-0  p-2">
@@ -286,7 +286,7 @@
                         </article>
                     </div>
                 </div>
-                <div data-aos="fadeInUp" class="xl:w-1/4 p-4 lg:w-1/3 md:w-1/6 mb-sm-5 mb-md-0 mb-4  d-none d-xl-block animate__faster">
+                <div data-aos="fadeInUp" class="xl:w-1/4 p-4 lg:w-1/3 md:w-1/6 mb-sm-5 mb-md-0 mb-4  d-none d-xl-block">
                     <h4
                         class="relative text-2xl after:w-20 after:content-[''] after:h-1 after:absolute after:bottom-0 after:left-0 after:bg-sky-600 border-b text-gray-700 font-bold leading-5 border-gray-200 pb-5  mb-7">
                         Top Rated</h4>
@@ -394,13 +394,13 @@
                         <div class="footer_widget footer_useful_links clearfix">
                             <h3 class="footer_widget_title text-white">Find it Fast</h3>
                             <ul class="ul_li_block">
-                                <li><a href="#!">Laptops &amp; Computers</a></li>
-                                <li><a href="#!">Cameras &amp; Photography</a></li>
-                                <li><a href="#!">Smart Phones &amp; Tablets</a></li>
-                                <li><a href="#!">Video Games &amp; Consoles</a></li>
-                                <li><a href="#!">TV &amp; Audio</a></li>
-                                <li><a href="#!">Gadgets</a></li>
-                                <li><a href="#!">Car Electronic &amp; GPS</a></li>
+                                <li><a href="#">Laptops &amp; Computers</a></li>
+                                <li><a href="#">Cameras &amp; Photography</a></li>
+                                <li><a href="#">Smart Phones &amp; Tablets</a></li>
+                                <li><a href="#">Video Games &amp; Consoles</a></li>
+                                <li><a href="#">TV &amp; Audio</a></li>
+                                <li><a href="#">Gadgets</a></li>
+                                <li><a href="#">Car Electronic &amp; GPS</a></li>
                             </ul>
                         </div>
                     </div>
