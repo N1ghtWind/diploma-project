@@ -8,10 +8,48 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
+
+    {{-- FONTAWSOME --}}
+
+    <script src="https://kit.fontawesome.com/9ebe564d03.js" crossorigin="anonymous"></script>
+
+    {{-- JQUERY --}}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+
+
+    {{-- FLOWBITE --}}
+    <script defer src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+
+    {{-- JQUERY WAYPOINTS --}}
+    <script defer src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+
+    {{-- JQUERY WAYPOINTS ANIMATE --}}
+    <script defer src="{{ asset('js/easy-waypoint-animate.js') }}"></script>
+
+    {{-- APP JS --}}
+    <script defer src="{{ asset('js/app.js') }}"></script>
+
+    {{-- WOW JS --}}
+    <script defer src="{{ asset('js/wow.js') }}"></script>
+
+    {{-- AOS --}}
+
+    <script defer src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    {{-- CUSTOM JS --}}
+    <script defer src="{{ asset('js/custom.js') }}"></script>
 </head>
 
 <body>
@@ -56,7 +94,7 @@
     <div class="font-sans text-gray-900 antialiased">
         {{ $slot }}
     </div>
-    <script defer src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
+
 </body>
 
 </html>

@@ -9,7 +9,6 @@ module.exports = {
         './resources/views/',
         "./node_modules/flowbite/**/*.js"
     ],
-
     theme: {
         extend: {
             fontFamily: {

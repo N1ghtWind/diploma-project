@@ -1,0 +1,27 @@
+.hover-up {
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+.hover-up:hover {
+    transform: translateY(-5px);
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+
+@media (min-width: 1280px) {
+    .xl\:h-128 {
+      height: 32rem;
+    }
+    .xl\:h-160 {
+        height: 40rem;
+      }
+  }
+  @media (min-width: 1536px) {
+
+    .\32xl\:h-128 {
+      height: 32rem;
+    }
+
+    .\32xl\:h-160 {
+        height: 40rem;
+      }
+  }
