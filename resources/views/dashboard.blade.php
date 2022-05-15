@@ -13,7 +13,6 @@
                 </div>
             </div>
         </div> --}}
-
         <div class="w-full mx-auto m-3 max-w-7xl bg-white p-12">
             <div class="header flex items-end justify-between mb-12">
                 <div class="title">
@@ -43,7 +42,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
                 <div class="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-80 cursor-pointer m-auto">
                     <a href="#" class="w-full block h-full">
-                        <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/1.jpg" class="max-h-40 w-full object-cover" />
+                        <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/1.jpg"
+                            class="max-h-40 w-full object-cover" />
                         <div class="bg-white  w-full p-4">
                             <p class="text-indigo-500 text-md font-medium">
                                 Video
@@ -73,7 +73,8 @@
                 </div>
                 <div class="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-80 cursor-pointer m-auto">
                     <a href="#" class="w-full block h-full">
-                        <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/2.jpg" class="max-h-40 w-full object-cover" />
+                        <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/2.jpg"
+                            class="max-h-40 w-full object-cover" />
                         <div class="bg-white  w-full p-4">
                             <p class="text-indigo-500 text-md font-medium">
                                 Oui
@@ -89,7 +90,8 @@
                                 <p class="text-gray-800 ">Listed date:</p>
                                 <p class="text-gray-400">2022.03.18</p>
                                 <a href="#" class="block relative">
-                                    <img alt="profil" src="https://benu.rs/images/documents/13244709-1342864532407039-3980967859900892105-n.png"
+                                    <img alt="profil"
+                                        src="https://benu.rs/images/documents/13244709-1342864532407039-3980967859900892105-n.png"
                                         class="mx-auto object-cover w-20 " />
                                 </a>
                                 {{-- <div class="flex flex-col justify-between ml-4 text-sm">
