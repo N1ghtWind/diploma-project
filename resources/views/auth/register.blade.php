@@ -12,8 +12,8 @@
                 </h1>
                 <div class="flex items-center my-3 p-2 rounded-md bg-gray-800 text-gray-100">
                     <x-register-tab route="{{ route('register') }}" :active="request()->routeIs('register')">Client</x-register-tab>
-                    <x-register-tab route="{{ route('register-company') }}" :active="request()->routeIs('register-company')">Company</x-register-tab>
-                    <x-register-tab route="{{ route('register-carrier') }}" :active="request()->routeIs('register-carrier')">Carrier</x-register-tab>
+                    <x-register-tab route="#" :active="request()->routeIs('register-company')">Company</x-register-tab>
+                    <x-register-tab route="#" :active="request()->routeIs('register-carrier')">Carrier</x-register-tab>
 
                 </div>
                 {{-- <ul
