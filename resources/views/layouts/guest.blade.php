@@ -47,8 +47,8 @@
     <script defer src="{{ asset('js/wow.js') }}"></script>
 
     {{-- AOS --}}
-
-    <script defer src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    {{-- <script defer src="https://unpkg.com/aos@next/dist/aos.js"></script> --}}
 
     {{-- CUSTOM JS --}}
     <script defer src="{{ asset('js/custom.js') }}"></script>
