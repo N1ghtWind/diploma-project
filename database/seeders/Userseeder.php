@@ -22,6 +22,7 @@ class Userseeder extends Seeder
             'password' => '$2y$10$B8QZ4s4kwazwKbryjwD.LOvX6aE2EPYFbAqVE5IEcOM4i7xnpJjcq',
             'created_at' => now(),
             'updated_at' => now(),
+            'email_verified_at' => now(),
         ]);
     }
 }

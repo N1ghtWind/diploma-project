@@ -485,7 +485,6 @@ class RegisteredUserController extends Controller
 
             $company->addMedia($file)->usingName('company_logos')->usingFileName($filename)->toMediaCollection('logo');
         }
-
         $company->update([
             'company_logo' => 'company_logos/' . $company->attachment->first()->file_name
         ]);

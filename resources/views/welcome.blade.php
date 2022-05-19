@@ -681,5 +681,5 @@
             </div>
         </div>
     </section>
-    <x-footer />
+    {{-- <x-footer /> --}}
 </x-guest-layout>

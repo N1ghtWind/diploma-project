@@ -25,4 +25,9 @@ Route::get('/register/carrier', function () {
     return view('auth.register');
 })->name('register-carrier');
 
+
+Route::get('/company/create', function() {
+    return view('company.create');
+})->middleware(['auth','verified','company']);
+
 require __DIR__ . '/auth.php';
