@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-carousel></x-carousel>
     <section class="flex items-center clearfix p-2 bg-gray-100" data-bg-color="#fafafa">
         <div class="w-full">
@@ -682,4 +682,4 @@
         </div>
     </section>
     {{-- <x-footer /> --}}
-</x-guest-layout>
+</x-app-layout>

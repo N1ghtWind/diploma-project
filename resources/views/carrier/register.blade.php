@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -74,7 +74,7 @@
                 <label class="block font-medium text-sm text-gray-700" for="location">
                     Location
                 </label>
-                <select name="gender" id="gender"
+                <select name="location" id="location"
                     class="form-select appearance-none
       block
       w-full
@@ -91,7 +91,7 @@
       rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     aria-label="Default select example">
                     @foreach ($cities as $city)
-                    <option value="{{ $city }}">{{ $city }}</option>
+                        <option value="{{ $city }}">{{ $city }}</option>
                     @endforeach
                 </select>
 
@@ -108,4 +108,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-app-layout>

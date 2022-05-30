@@ -46,4 +46,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userable() {
         return $this->morphTo();
     }
+
+    public function is_company() {
+        
+        if( $this->userable === null ) { return false; }
+
+        return get_class($this->userable) === "App\Models\Company";
+    }
 }

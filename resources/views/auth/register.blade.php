@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -16,20 +16,6 @@
                     <x-register-tab route="{{ route('register.carrier') }}" :active="request()->routeIs('register.carrier')">Carrier</x-register-tab>
 
                 </div>
-                {{-- <ul
-                    class="text-sm shadow-lg flex font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 dark:divide-gray-200 dark:text-gray-400">
-                    <li class="w-full">
-                        <a href="{{ route('register-carrier') }}"
-                            class="inline-block p-4 w-full text-gray-900 bg-white hover:text-gray-700 hover:bg-gray-200 dark:hover:text-white whitespace-nowrap dark:bg-gray-100 dark:hover:bg-gray-800">Register
-                            as carrier</a>
-
-                    </li>
-                    <li class="w-full">
-                        <a href="{{ route('register') }}"
-                            class="inline-block p-4 w-full text-gray-900 bg-white hover:text-gray-700 hover:bg-gray-200 dark:hover:text-white whitespace-nowrap dark:bg-gray-100 dark:hover:bg-gray-800">Register
-                            as client</a>
-                    </li>
-                </ul> --}}
             </div>
         </x-slot>
 
@@ -80,4 +66,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-app-layout>
