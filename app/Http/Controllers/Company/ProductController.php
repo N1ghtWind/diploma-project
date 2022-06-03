@@ -11,7 +11,7 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','company']);
+        $this->middleware(['company','auth']);
     }
   /**
      * Display a listing of the resource.

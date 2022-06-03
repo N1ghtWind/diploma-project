@@ -64,7 +64,7 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
         <nav x-data="{ open: false }" class="bg-white border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-gray-800">
-            <div class="container flex flex-wrap justify-between items-center mx-auto">
+            <div class="px-4 flex flex-wrap justify-between items-center mx-auto">
                 <div class="flex items-center">
                     <a href="{{ URL::to('') }}">
                         <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
@@ -105,23 +105,40 @@
                                                     @csrf
                                                     <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
                                                         href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                        this.closest('form').submit();">Sign out</a>
+                                                                    this.closest('form').submit();">Sign out</a>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
                             @endauth
-                            <li>
-                                <a href="{{ route('dashboard') }}"
-                                    class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Dashboard</a>
-                            </li>
-                            <li>
+                            @auth
+                                <li>
+                                    <a href="{{ route('products.index') }}"
+                                        class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Products</a>
+                                </li>
+                                @can('create', App\Models\Product::class)
+                                <li>
 
-                                <a href="{{ route('company.product.index') }}"
-                                    class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My
-                                    products</a>
-                            </li>
+                                    <a href="{{ route('company.product.index') }}"
+                                        class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                        My products</a>
+                                </li>
+                                @endcan
+                            @endauth
+                            @guest
+                                <li>
+
+                                    <a href="{{ route('login') }}"
+                                        class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                        Login</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('register') }}"
+                                        class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Register</a>
+                                </li>
+                            @endguest
+
 
 
                         </ul>
@@ -145,7 +162,7 @@
             <div :class="{ 'block': open, 'hidden': !open }" class="sm:hidden block">
                 <div class="pt-2 pb-3 space-y-1">
                     <a class="block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base text-gray-500 hover:bg-gray-100 font-medium bg-gray-800 focus:outline-none focus:text-indigo-800 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out"
-                        href="{{ route('dashboard') }}">
+                        href="{{ route('products.index') }}">
                         Dashboard
                     </a>
                 </div>
@@ -159,10 +176,7 @@
                 @endcan
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-t border-gray-200">
-                    <div class="px-4">
-                        <div class="font-medium text-base text-gray-800"></div>
-                        <div class="font-medium text-sm text-gray-500">terezsak@gmail.com</div>
-                    </div>
+
 
                     <div class="mt-3 space-y-1">
                         <!-- Authentication -->

@@ -17,12 +17,12 @@ class CompanyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()?->user()?->userable === null) return abort(404);
 
+        if(auth()?->user()?->userable === null) return redirect()->route('login');
         if (Auth::user() &&  get_class(auth()?->user()?->userable) === "App\Models\Company") {
             return $next($request);
         }
 
-        return abort(404);
+        return redirect()->route('login');
     }
 }

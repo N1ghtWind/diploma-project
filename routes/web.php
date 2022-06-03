@@ -23,13 +23,13 @@ Route::get('test', function() {
     return view('layouts.test');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('products');
 
-Route::get('/register/carrier', function () {
-    return view('auth.register');
-})->name('register-carrier');
+// Route::get('/register/carrier', function () {
+//     return view('auth.register');
+// })->name('register-carrier');
 
 
 
