@@ -1,11 +1,6 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/products/index.css') }}"> --}}
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
     <div class="py-12">
         <div class="w-full mx-auto m-3 max-w-7xl bg-white p-12">
             <main>
@@ -193,7 +188,7 @@
                                                     <div
                                                         class="flex-shrink-0 flex items-center justify-center h-30 w-20 mr-2 _f">
                                                         <img class="rq w-full"
-                                                            src="{{ asset('products/aspirin.jpg') }}" alt="product">
+                                                            src="{{ asset('assets/products/aspirin.jpg') }}" alt="product">
                                                     </div>
                                                 </div>
                                             </td>

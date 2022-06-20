@@ -6,20 +6,11 @@
             <div style="top: 25%; left: 15%"
                 class="slider_content absolute z-10 top-1/4 text-2xl font-semibold text-white">
                 <ul class="item_label ul_li_block clearfix" data-animation="fadeInUp" data-delay=".2s">
-                    <li><span class="animate__animated animate__bounce">Test 123</span></li>
-                    <li><span>New Collection</span></li>
-                    <h1 class="ez-animate" data-animation="fadeInUp" data-delay=".4s">An animated element</h1>
-
+                    <li><span class="animate__animated animate__bounce text-4xl">Highest quality vegetables</span></li>
+                    <li><span class=" text-3xl">From the local shops</span></li>
                 </ul>
-                <h4 class="text-white ez-animate" data-animation="fadeInUp" data-delay=".4s">Vegetables</h4>
-                <h3 class="text-white" data-animation="fadeInUp" data-delay=".6s">Fresh</h3>
-                <p data-animation="fadeInUp" data-delay=".8s">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolores, ducimus ipsa molestiae
-                    eligendi perspiciatis quasi, debitis ut doloremque excepturi inventore, repellendus laboriosam.
-                    Reprehenderit sunt nobis sit provident aspernatur dicta!
-                </p>
-                <div class="abtn_wrap clearfix" data-animation="fadeInUp" data-delay="1s">
-                    <a href="#!" class="custom_btn bg_black text-uppercase">Shop Now</a>
+                <div class="abtn_wrap my-4 clearfix" data-animation="fadeInUp" data-delay="1s">
+                    <a href="{{ route('products.index') }}" class="custom_btn bg_black p-2 text-uppercase rounded-full bg-indigo-500">Shop Now</a>
                 </div>
             </div>
 

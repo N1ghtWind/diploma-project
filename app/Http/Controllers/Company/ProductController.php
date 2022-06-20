@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompanyProductRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -11,9 +14,9 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['company','auth']);
+        $this->middleware(['company', 'auth','verified']);
     }
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -40,9 +43,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyProductRequest $request)
     {
-        //
+        $product = Product::create([
+            'name' => $request->name,
+            "description" =>  $request->desc,
+            "price" => $request->price,
+            "quantity_unit" => $request->quantity,
+        ]);
+
+        if ($request->has('image')) {
+            $file = $request->file('image');
+            $filename = md5(Str::uuid() . time()) . '.' . $file->getClientOriginalExtension();
+            $product->addMediaFromRequest('image')->usingFileName($filename)->toMediaCollection();
+        }
+
+        return redirect()->back()->with('status','Product created!');
     }
 
     /**

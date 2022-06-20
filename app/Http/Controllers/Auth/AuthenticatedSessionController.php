@@ -7,6 +7,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Http;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,9 +31,8 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
+        $token = request()->user()->createToken('authToken')->plainTextToken;
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -43,6 +44,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        Auth::user()->tokens->each(function($token, $key) {
+            $token->delete();
+        });
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

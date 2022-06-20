@@ -1,143 +1,237 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>Laravel</title>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <script src="https://js.stripe.com/v3/"></script>
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+        <style>
+            .spacer {
+                margin-bottom: 24px;
+            }
+            /**
+             * The CSS shown here will not be introduced in the Quickstart guide, but shows
+             * how you can use CSS to style your Element's container.
+             */
+            .StripeElement {
+              background-color: white;
+              padding: 10px 12px;
+              border-radius: 4px;
+              border: 1px solid #ccd0d2;
+              box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+              -webkit-transition: box-shadow 150ms ease;
+              transition: box-shadow 150ms ease;
+            }
+            .StripeElement--focus {
+              box-shadow: 0 1px 3px 0 #cfd7df;
+            }
+            .StripeElement--invalid {
+              border-color: #fa755a;
+            }
+            .StripeElement--webkit-autofill {
+              background-color: #fefde5 !important;
+            }
+            #card-errors {
+                color: #fa755a;
+            }
+        </style>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Payment Form</h1>
+                <div class="spacer"></div>
 
-    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+                @if (session()->has('success_message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success_message') }}
+                    </div>
+                @endif
 
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+                @if(count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <form action="{{ url('/checkout') }}" method="POST" id="payment-form">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
 
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+                    <div class="form-group">
+                        <label for="name_on_card">Name on Card</label>
+                        <input type="text" class="form-control" id="name_on_card" name="name_on_card">
+                    </div>
 
-    <!-- Scripts -->
-
-    {{-- JQUERY --}}
-    <script src="{{ asset('js/jquery.js') }}"></script>
-
-
-    {{-- FONTAWSOME --}}
-
-    <script src="https://kit.fontawesome.com/9ebe564d03.js" crossorigin="anonymous"></script>
-
-    {{-- FLOWBITE --}}
-    <script defer src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
-
-    {{-- JQUERY WAYPOINTS --}}
-    <script defer src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
-
-    {{-- JQUERY WAYPOINTS ANIMATE --}}
-    <script defer src="{{ asset('js/easy-waypoint-animate.js') }}"></script>
-
-    {{-- APP JS --}}
-    <script defer src="{{ asset('js/app.js') }}"></script>
-
-    {{-- WOW JS --}}
-    <script defer src="{{ asset('js/wow.js') }}"></script>
-
-    {{-- AOS --}}
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    {{-- <script defer src="https://unpkg.com/aos@next/dist/aos.js"></script> --}}
-
-    {{-- CUSTOM JS --}}
-    <script defer src="{{ asset('js/custom.js') }}"></script>
-
-
-
-
-
-</head>
-
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-gray-800">
-            <div class="container flex flex-wrap justify-between items-center mx-auto">
-                <div class="flex items-center">
-                    <a href="{{ URL::to('') }}">
-                        <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
-                    </a>
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Diploma</span>
-                </div>
-                <button data-collapse-toggle="mobile-menu" type="button"
-                    class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                    aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
-                    <ul class="flex flex-col mt-4 text-lg md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
-                        <li>
-                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
-                                class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-white md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">{{ Auth::user()->name }}
-                                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"></path>
-                                </svg></button>
-                            <!-- Dropdown menu -->
-                            <div id="dropdownNavbar" style="position:relative"
-                                class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                <form id="logout" action="{{ route('logout') }}" method="post">
-                                    @csrf
-                                    <a onclick="document.getElementById('logout').submit();"
-                                        class="block py-3 cursor-pointer px-4 text-sm text-gray-700 hover:bg-gray-100 hover:rounded dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">
-                                        Sign out
-                                    </a>
-                                </form>
-
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" id="address" name="address">
                             </div>
-                        </li>
+                        </div>
 
-                        <li>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" name="city">
+                            </div>
+                        </div>
 
-                            <a href="{{ route('login') }}"
-                                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-                        </li>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="province">Province</label>
+                                <input type="text" class="form-control" id="province" name="province">
+                            </div>
+                        </div>
 
+                    </div>
 
-                    </ul>
-                </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="postalcode">Postal Code</label>
+                                <input type="text" class="form-control" id="postalcode" name="postalcode">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" id="country" name="country">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {{-- <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cc_number">Credit Card Number</label>
+                                <input type="text" class="form-control" id="cc_number" name="cc_number">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="expiry">Expiry</label>
+                                <input type="text" class="form-control" id="expiry" name="expiry">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="cvc">CVC</label>
+                                <input type="text" class="form-control" id="cvc" name="cvc">
+                            </div>
+                        </div>
+                    </div> --}}
+
+                    <div class="form-group">
+                        <label for="card-element">Credit Card</label>
+                        <div id="card-element">
+                          <!-- a Stripe Element will be inserted here. -->
+                      </div>
+
+                      <!-- Used to display form errors -->
+                      <div id="card-errors" role="alert"></div>
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <button type="submit" class="btn btn-success">Submit Payment</button>
+                </form>
             </div>
-        </nav>
+        </div>
 
-
-        <!-- Page Content -->
-        <main>
-
-        </main>
-    </div>
-    <script defer src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
-
-</body>
-
+        <script>
+            (function(){
+                // Create a Stripe client
+                var stripe = Stripe('{{ config('services.stripe.key') }}');
+                // Create an instance of Elements
+                var elements = stripe.elements();
+                // Custom styling can be passed to options when creating an Element.
+                // (Note that this demo uses a wider set of styles than the guide below.)
+                var style = {
+                  base: {
+                    color: '#32325d',
+                    lineHeight: '18px',
+                    fontFamily: '"Raleway", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                      color: '#aab7c4'
+                    }
+                  },
+                  invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                  }
+                };
+                // Create an instance of the card Element
+                var card = elements.create('card', {
+                    style: style,
+                    hidePostalCode: true
+                });
+                // Add an instance of the card Element into the `card-element` <div>
+                card.mount('#card-element');
+                // Handle real-time validation errors from the card Element.
+                card.addEventListener('change', function(event) {
+                  var displayError = document.getElementById('card-errors');
+                  if (event.error) {
+                    displayError.textContent = event.error.message;
+                  } else {
+                    displayError.textContent = '';
+                  }
+                });
+                // Handle form submission
+                var form = document.getElementById('payment-form');
+                form.addEventListener('submit', function(event) {
+                  event.preventDefault();
+                  var options = {
+                    name: document.getElementById('name_on_card').value,
+                  }
+                  stripe.createToken(card, options).then(function(result) {
+                    if (result.error) {
+                      // Inform the user if there was an error
+                      var errorElement = document.getElementById('card-errors');
+                      errorElement.textContent = result.error.message;
+                    } else {
+                      // Send the token to your server
+                      stripeTokenHandler(result.token);
+                    }
+                  });
+                });
+                function stripeTokenHandler(token) {
+                  // Insert the token ID into the form so it gets submitted to the server
+                  var form = document.getElementById('payment-form');
+                  var hiddenInput = document.createElement('input');
+                  hiddenInput.setAttribute('type', 'hidden');
+                  hiddenInput.setAttribute('name', 'stripeToken');
+                  hiddenInput.setAttribute('value', token.id);
+                  form.appendChild(hiddenInput);
+                  // Submit the form
+                  form.submit();
+                }
+            })();
+        </script>
+    </body>
 </html>

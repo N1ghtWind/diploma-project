@@ -59,6 +59,7 @@
 
     {{-- CUSTOM JS --}}
     <script defer src="{{ asset('js/custom.js') }}"></script>
+    <script defer src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -76,7 +77,7 @@
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <ul
-                            class="flex flex-col mt-4 text-lg md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
+                            class="flex flex-col items-center mt-4 text-lg md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
                             @auth
                                 <li>
                                     <div class="relative" x-data="{ open: false }" @click.outside="open = false"
@@ -104,8 +105,10 @@
                                                 <form method="POST" action="{{ route('logout') }}">
                                                     @csrf
                                                     <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
-                                                        href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                    this.closest('form').submit();">Sign out</a>
+                                                        href="{{ route('logout') }}"
+                                                        onclick="event.preventDefault();
+                                                                                                this.closest('form').submit();">Sign
+                                                        out</a>
                                                 </form>
                                             </div>
                                         </div>
@@ -118,13 +121,18 @@
                                         class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Products</a>
                                 </li>
                                 @can('create', App\Models\Product::class)
-                                <li>
+                                    <li>
 
-                                    <a href="{{ route('company.product.index') }}"
-                                        class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                                        My products</a>
-                                </li>
+                                        <a href="{{ route('company.product.index') }}"
+                                            class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                            My products</a>
+                                    </li>
                                 @endcan
+                                <li>
+                                    <a href="{{ route('products.index') }}"
+                                        class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"><i class="fa-solid fa-basket-shopping"></i></a>
+                                </li>
+
                             @endauth
                             @guest
                                 <li>
@@ -166,14 +174,18 @@
                         Dashboard
                     </a>
                 </div>
-                @can('create', App\Models\Product::class)
-                    <div class="pt-2 pb-3 space-y-1">
-                        <a class="block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base text-gray-500 hover:bg-gray-100 font-medium bg-gray-800 focus:outline-none focus:text-indigo-800 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out"
-                            href="{{ route('company.product.index') }}">
-                            My Products
-                        </a>
-                    </div>
-                @endcan
+                @auth
+                    @can('create', App\Models\Product::class)
+                        <div class="pt-2 pb-3 space-y-1">
+                            <a class="block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base text-gray-500 hover:bg-gray-100 font-medium bg-gray-800 focus:outline-none focus:text-indigo-800 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out"
+                                href="{{ route('company.product.index') }}">
+                                My Products
+                            </a>
+                        </div>
+                    @endcan
+                        <basket></basket>
+                    @endauth
+
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-t border-gray-200">
 
@@ -199,8 +211,6 @@
             {{ $slot }}
         </main>
     </div>
-    <script defer src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
-
 </body>
 
 </html>
