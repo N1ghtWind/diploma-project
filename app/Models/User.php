@@ -48,9 +48,25 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function is_company() {
-        
+
         if( $this->userable === null ) { return false; }
 
         return get_class($this->userable) === "App\Models\Company";
+    }
+
+    public function is_admin() {
+
+        if( $this->userable === null ) { return false; }
+
+        return get_class($this->userable) === "App\Models\Admin";
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function addresses() {
+        return $this->hasMany(Address::class);
     }
 }

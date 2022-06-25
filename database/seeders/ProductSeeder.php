@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -28,12 +29,14 @@ class ProductSeeder extends Seeder
             'description' => 'Aspirin',
             'price' => 5,
             'quantity_unit' => '100g',
+            'user_id' => User::where('userable_type', '=', 'App\Models\Company')->get()->pluck('id')->random(),
         ]);
         Product::create([
             'name' => 'Carrot',
             'description' => 'Carrot',
             'price' => 4,
             'quantity_unit' => '100g',
+            'user_id' => User::where('userable_type', '=', 'App\Models\Company')->get()->pluck('id')->random(),
         ]);
 
         Product::create([
@@ -41,6 +44,7 @@ class ProductSeeder extends Seeder
             'description' => 'Apple!',
             'price' => 3,
             'quantity_unit' => '100g',
+            'user_id' => User::where('userable_type', '=', 'App\Models\Company')->get()->pluck('id')->random(),
         ]);
 
         $products = Product::all();

@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->double('paid_amount');
+            $table->string('intent_id');
+            $table->enum('status', ['paid', 'cancelled', 'refunded', 'failed']);
+            $table->longText('receipt_url');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')

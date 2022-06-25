@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyProductRequest;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -23,8 +24,13 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $my_products = User::find(auth()->user()->id)->products()->simplePaginate(2);
+        $count_of_my_products = User::find(auth()->user()->id)->products()->count();
 
-        return view('company.product.index');
+        return view('company.product.index', [
+            'my_products' => $my_products,
+            'count_of_my_products' => $count_of_my_products,
+        ]);
     }
 
     /**
@@ -50,6 +56,7 @@ class ProductController extends Controller
             "description" =>  $request->desc,
             "price" => $request->price,
             "quantity_unit" => $request->quantity,
+            "user_id" => auth()->user()->id,
         ]);
 
         if ($request->has('image')) {
@@ -80,7 +87,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('company.product.edit');
     }
 
     /**

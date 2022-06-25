@@ -99,8 +99,12 @@
                                             class="absolute z-50 mt-2 w-48 rounded-md shadow-lg origin-top-right right-0
                               divide-y  bg-gray-700 divide-gray-600"
                                             @click="open = false">
+                                            <div class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
+                                                <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
+                                                    href="#">Settings</a>
+                                            </div>
                                             <div
-                                                class="rounded-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
+                                                class="rounded-b-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
                                                 <!-- Authentication -->
                                                 <form method="POST" action="{{ route('logout') }}">
                                                     @csrf

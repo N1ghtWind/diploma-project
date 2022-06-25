@@ -48,7 +48,7 @@
 
 
                 <div class="flex justify-center mt-8">
-                    <div class="rounded-lg shadow-xl bg-gray-50 w-full">
+                    <div class="rounded-lg bg-white w-full">
                         <label for="image" class="inline-block text-gray-700 font-medium">Product Image</label>
                         <p class="text-gray-400 my-2">(jpg,png,svg,jpeg)</p>
                         <div class="flex items-center justify-center w-full">

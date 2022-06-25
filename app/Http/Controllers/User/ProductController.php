@@ -14,8 +14,7 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
-
+        $this->middleware(['auth', 'verified']);
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +26,21 @@ class ProductController extends Controller
         $userId = auth()->user()->id; // or any string represents user identifier
         $cartItems = Cart::session($userId)->getContent();
 
-        return Inertia::render('Products/Index',['products' => Product::with('media')->get(), 'CartItems' => $cartItems]);
+        $prdoucts = Product::with('media')->get();
+
+
+
+        if (request()->has('search')) {
+
+            $term = trim(request()->query('search'));
+
+            $prdoucts = Product::search($term)->query(function ($query) {
+                $query->with('media');
+            })->get();
+        }
+
+
+        return Inertia::render('Products/Index', ['products' => $prdoucts, 'CartItems' => $cartItems]);
     }
     /**
      * Display the specified resource.
@@ -37,8 +50,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('user.show',['product' => $product]);
+        return view('user.show', ['product' => $product]);
     }
-
-
 }

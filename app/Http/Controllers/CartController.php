@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CartRequest;
+use App\Mail\OrderMail;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 use Stripe\StripeClient;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -18,8 +24,7 @@ class CartController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
-
+        $this->middleware(['auth', 'verified']);
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +36,6 @@ class CartController extends Controller
 
         $userId = auth()->user()->id;
         $cart_items = Cart::session($userId)->getContent();
-
         $total_price = Cart::session($userId)->getSubTotal();
         $total_price_without_fee = Cart::session($userId)->getSubTotalWithoutConditions();
 
@@ -132,10 +136,6 @@ class CartController extends Controller
     }
 
 
-    public function checkout()
-    {
-    }
-
     public function afterPayment(Request $request)
     {
 
@@ -144,18 +144,57 @@ class CartController extends Controller
 
             $intent = \Stripe\PaymentIntent::retrieve(session('intent_id'));
 
-            // dd($intent);
             $charges = $intent->charges->data;
             $charge = $charges[0] ?? null;
-
-            if(!isset($charge) || $charge === null) {
+            if (!isset($charge) || $charge === null) {
                 abort(404);
             }
+
+            $status = 'failed';
+
+            if ($charge->status === 'succeeded' && $charge->amount_captured === $charge->amount) {
+                $status = 'paid';
+            }
             if ($charge->paid) {
+
                 $userId = auth()->user()->id;
+                $user = User::findOrFail($userId);
+                $cart_items = Cart::session($userId)->getContent();
+                $ammount_captured = $charge->amount_captured;
+                $intent_id = session('intent_id');
+                $total_price = Cart::session($userId)->getSubTotal();
+                $total_price_without_fee = Cart::session($userId)->getSubTotalWithoutConditions();
+
+                if ($ammount_captured !== $charge->amount || (float)$ammount_captured / 100 !== $total_price) {
+                    abort(403);
+                }
+
+                $order = Order::create([
+                    'user_id' => $userId,
+                    'paid_amount' => (float)$ammount_captured / 100,
+                    'intent_id' => $intent_id,
+                    'status' => 'paid',
+                    'receipt_url' => $charge->receipt_url,
+
+                ]);
+                foreach($cart_items as $cart_item) {
+                    $order->products()->attach($cart_item->id, [
+                        'quantity' => $cart_item->quantity,
+                        'price' => $cart_item->price,
+                    ]);
+                }
+
+                User::all();
+                Notification::send(User::all(), new OrderNotification($order, User::find($userId)));
+                $prices = (object)[
+                    'total_price' => $total_price,
+                    'total_price_without_fee' => $total_price_without_fee,
+                ];
+                Mail::to($user->email)->send(new OrderMail($cart_items, $order->load('products'), $user, $prices));
+
                 session()->forget('intent_id');
                 Cart::session($userId)->clear();
-                return redirect()->route('cart.index')->with('success', 'Payment Successful, please check youjr email address for more information!');
+                return redirect()->route('cart.index')->with('success', 'Payment Successful, please check your email address for more information!');
             }
         }
     }

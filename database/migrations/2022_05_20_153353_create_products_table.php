@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('description');
             $table->string('quantity_unit');
             $table->string('price');
+            $table->unsignedInteger('user_id');
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

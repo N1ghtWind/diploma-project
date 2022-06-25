@@ -10,8 +10,7 @@
           </p>
         </div>
         <div class="text-end">
-          <form
-            class="
+          <div class="
               flex flex-col
               md:flex-row
               w-3/4
@@ -21,11 +20,11 @@
               space-y-3
               md:space-y-0
               justify-center
-            "
-          >
+            ">
             <div class="relative">
               <input
                 type="text"
+                v-model="searched_term"
                 id='"form-subscribe-Search'
                 class="
                   rounded-lg
@@ -45,10 +44,11 @@
                   focus:ring-purple-600
                   focus:border-transparent
                 "
-                placeholder="Enter a title"
+                placeholder="Search something..."
               />
             </div>
             <button
+              @click="search"
               class="
                 flex-shrink-0
                 px-4
@@ -66,11 +66,10 @@
                 focus:ring-offset-2
                 focus:ring-offset-purple-200
               "
-              type="submit"
             >
               Search
             </button>
-          </form>
+          </div>
         </div>
       </div>
 
@@ -156,6 +155,7 @@
 
 <script>
 import Basket from "../components/AddToCartButton.vue";
+import { Inertia } from "@inertiajs/inertia";
 export default {
   name: "DiplomaIndex",
   props: {
@@ -168,7 +168,9 @@ export default {
 
   components: { Basket },
   data() {
-    return {};
+    return {
+        searched_term: "",
+    };
   },
 
   mounted() {},
@@ -184,6 +186,11 @@ export default {
       }
         return 0;
     },
+    search() {
+        Inertia.get(route("products.index"), {
+            search: this.searched_term,
+        });
+    }
   },
 };
 </script>

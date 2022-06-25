@@ -142,18 +142,17 @@
                         €{{ cart_item.associatedModel.price }}
                       </div>
                     </div>
-                    <CartItem :product="cart_item" />
+                    <CartItem v-show="!isFormProcessing" :product="cart_item" />
                   </div>
                   <button
                     @click="removeItem(cart_item)"
-                    class="
-                      text-sm
-                      btn
-                      bg-rose-500
-                      p-2
-                      text-white
-                      hover:bg-rose-600
-                    "
+                    class="text-sm btn p-2 text-white"
+                    :class="[
+                      isFormProcessing
+                        ? 'bg-gray-500 hover:bg-gray-500'
+                        : 'bg-rose-500 hover:bg-rose-600',
+                    ]"
+                    :disabled="isFormProcessing"
                   >
                     Remove
                   </button>
@@ -202,6 +201,7 @@
               :action="form_route"
               method="POST"
               id="payment-form"
+              @submit.prevent="submitForm"
             >
               <input type="hidden" name="_token" :value="$page.props._token" />
               <div class="mb-6">
@@ -276,6 +276,9 @@ import CartItem from "./components/CartItem.vue";
 
 export default {
   name: "DiplomaIndex",
+  components: {
+    CartItem,
+  },
   props: {
     cart_items: {
       type: Object,
@@ -309,81 +312,77 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      isFormProcessing: false,
+    };
   },
-  created() {
-    // var scripts = [
-    //   "https://js.stripe.com/v3",
-    // ];
-    // scripts.forEach(script => {
-    //   let tag = document.createElement("script");
-    //   tag.setAttribute("src", script);
-    //   document.head.appendChild(tag);
-    // });
-  },
+  created() {},
 
   watch: {
     intent: function (newVal, oldVal) {
       // watch it
       console.log("Prop changed: ", newVal, " | was: ", oldVal);
-        if (newVal !== oldVal) {
-             this.initalizePayment(newVal);
-        }
+      if (newVal !== oldVal) {
+        this.initalizePayment(newVal);
+      }
     },
   },
 
   mounted() {
-     const appearance = {
-        labels: "floating",
-      };
-      const stripe = Stripe(this.stripe_key, {
-        locale: "en",
-      });
+    const appearance = {
+      labels: "floating",
+    };
+    const stripe = Stripe(this.stripe_key, {
+      locale: "en",
+    });
 
-      const cardButton = document.getElementById("card-button");
-      const clientSecret = cardButton.dataset.secret;
+    const cardButton = document.getElementById("card-button");
+    const clientSecret = cardButton.dataset.secret;
 
-      if (this.intent === null) {
-        return;
+    if (this.intent === null) {
+      return;
+    }
+    var elements = stripe.elements({
+      clientSecret: clientSecret,
+      appearance: appearance,
+    });
+    const paymentElement = elements.create("payment", {
+      clientSecret,
+    });
+    paymentElement.mount("#payment-element");
+    paymentElement.addEventListener("change", ({ error }) => {
+      console.log(error);
+      const displayError = document.getElementById("card-errors");
+      if (error) {
+        displayError.textContent = error.message;
+      } else {
+        displayError.textContent = "";
       }
+    });
+    // Handle form submission.
+    var form = document.getElementById("payment-form");
 
-      var elements = stripe.elements({
-        clientSecret: clientSecret,
-        appearance: appearance,
-      });
-      const paymentElement = elements.create("payment", {
-        clientSecret,
-      });
-      paymentElement.mount("#payment-element");
-    //   paymentElement.addEventListener("change", ({ error }) => {
-    //     console.log(error);
-    //     const displayError = document.getElementById("card-errors");
-    //     if (error) {
-    //       displayError.textContent = error.message;
-    //     } else {
-    //       displayError.textContent = "";
-    //     }
-    //   });
-    //   // Handle form submission.
-    //   var form = document.getElementById("payment-form");
-    //   form.addEventListener("submit", async function (event) {
-    //     event.preventDefault();
-    //     stripe
-    //       .confirmPayment({
-    //         elements,
-    //         confirmParams: {
-    //           return_url: "https://example.com",
-    //         },
-    //         redirect: "if_required",
-    //       })
-    //       .then(function (result) {
-    //         if (result.error) {
-    //           console.log(result.error);
-    //         } else {
-    //           form.submit();
-    //         }
-    //       });
-    //   });
+    var self = this;
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      self.isFormProcessing = true;
+      stripe
+        .confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: "https://example.com",
+          },
+          redirect: "if_required",
+        })
+        .then(function (result) {
+          if (result.error) {
+            console.log(result.error);
+            self.isFormProcessing = false;
+          } else {
+            form.submit();
+          }
+        });
+    });
   },
   methods: {
     manageItem(url, method, product) {
@@ -404,7 +403,6 @@ export default {
     removeItem(product) {
       this.manageItem("/cart", "delete", product);
     },
-
     initalizePayment(intent) {
       const appearance = {
         labels: "floating",
@@ -437,10 +435,14 @@ export default {
           displayError.textContent = "";
         }
       });
+      var form = document.getElementById("payment-form");
       // Handle form submission.
       var form = document.getElementById("payment-form");
+
+      var self = this;
       form.addEventListener("submit", async function (event) {
         event.preventDefault();
+        self.isFormProcessing = true;
         stripe
           .confirmPayment({
             elements,
@@ -452,6 +454,7 @@ export default {
           .then(function (result) {
             if (result.error) {
               console.log(result.error);
+              self.isFormProcessing = false;
             } else {
               form.submit();
             }
@@ -459,9 +462,5 @@ export default {
       });
     },
   },
-  components: { CartItem },
 };
 </script>
-
-<style scoped>
-</style>

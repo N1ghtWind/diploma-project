@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Carrier;
 use App\Models\Company;
 use App\Models\User;
@@ -414,7 +415,7 @@ class RegisteredUserController extends Controller
      */
     public function index()
     {
-        return view('auth.register');
+        return view('auth.register', ['cities' => $this->cities]);
     }
 
     public function indexCompany()
@@ -445,12 +446,27 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'city' =>   ['required','string', Rule::in($this->cities)],
+            'phone' => ['required', 'string', 'max:12', 'unique:addresses'],
+            'address' => ['required', 'string', 'max:255'],
+            'zip' => ['required', 'string', 'max:255'],
+            'full_name' => ['required', 'string', 'max:255'],
+
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        Address::create([
+            'user_id' => $user->id,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'zip' => $request->zip,
+            'full_name' => $request->full_name,
         ]);
 
         event(new Registered($user));

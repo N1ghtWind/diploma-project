@@ -17,7 +17,7 @@ import PrimeVue from 'primevue/config';
 import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
-
+import { Skeletor } from 'vue-skeletor';
 
 InertiaProgress.init({
 
@@ -34,6 +34,7 @@ createInertiaApp({
              VueApexCharts,
              Link,
              Head,
+             Skeletor,
             } });
         app.use(PrimeVue);
         app.use(Toast);
