@@ -8,10 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPUnit\Framework\MockObject\Verifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
@@ -40,23 +43,41 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'date:Y-d-m H:i:s',
+        'created_at' => 'date:Y-d-m H:i:s',
+        'updated_at' => 'date:Y-d-m H:i:s',
+
     ];
 
-    public function userable() {
+    public function userable()
+    {
         return $this->morphTo();
     }
 
-    public function is_company() {
+    public function is_company()
+    {
 
-        if( $this->userable === null ) { return false; }
+        if ($this->userable === null) {
+            return false;
+        }
 
         return get_class($this->userable) === "App\Models\Company";
     }
 
-    public function is_admin() {
+    public function is_carrier()
+    {
+        if ($this->userable === null) {
+            return false;
+        }
+        return get_class($this->userable) === "App\Models\Carrier";
+    }
 
-        if( $this->userable === null ) { return false; }
+    public function is_admin()
+    {
+
+        if ($this->userable === null) {
+            return false;
+        }
 
         return get_class($this->userable) === "App\Models\Admin";
     }
@@ -66,7 +87,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Product::class);
     }
 
-    public function addresses() {
-        return $this->hasMany(Address::class);
+    public function address()
+    {
+        return $this->hasOne(Address::class);
     }
 }

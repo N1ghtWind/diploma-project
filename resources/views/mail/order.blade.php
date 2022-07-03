@@ -184,7 +184,7 @@
                                         style="border-bottom: 1px solid #126de5;">&nbsp; </td>
                                     <td rowspan="2" class="o_sans o_text o_text-secondary o_px o_py" align="center"
                                         style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 16px;line-height: 24px;color: #424651;padding-left: 16px;padding-right: 16px;padding-top: 16px;padding-bottom: 16px;">
-                                        <img src="https://flowbite.com/docs/images/logo.svg" width="48"
+                                        <img src="{{ asset('assets/logo.png') }}" width="48"
                                             height="48" alt=""
                                             style="max-width: 48px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;">
                                     </td>
@@ -444,11 +444,11 @@
                             style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 14px;line-height: 21px;color: #424651;text-align: left;padding-left: 8px;padding-right: 8px;">
                             <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;"><strong>Shipping
                                     Information</strong></p>
-                            <p class="o_mb-md" style="margin-top: 0px;margin-bottom: 24px;">{{ $user->addresses->first()->full_name }}<br>
-                                {{ $user->addresses->first()->address }}<br>
-                                {{ $user->addresses->first()->city }}<br>
-                                {{ $user->addresses->first()->zip }}</p>
-                                {{ $user->addresses->first()->phone }}</p>
+                            <p class="o_mb-md" style="margin-top: 0px;margin-bottom: 24px;">{{ $user->address->full_name }}<br>
+                                {{ $user->address->address }}<br>
+                                {{ $user->address->city }}<br>
+                                {{ $user->address->zip }}</p>
+                                {{ $user->address->phone }}</p>
                             <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;"><strong>Shipping
                                     Method</strong></p>
                             <p style="margin-top: 0px;margin-bottom: 0px;">FedEx</p>

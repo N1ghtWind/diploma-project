@@ -6,22 +6,18 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-import { Head } from '@inertiajs/inertia-vue3'
+import { Head } from "@inertiajs/inertia-vue3";
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import VueApexCharts from "vue3-apexcharts";
-import { Link } from '@inertiajs/inertia-vue3'
-import { InertiaProgress } from '@inertiajs/progress'
-import PrimeVue from 'primevue/config';
+import { Link } from "@inertiajs/inertia-vue3";
+import { InertiaProgress } from "@inertiajs/progress";
+import PrimeVue from "primevue/config";
+import { Skeletor } from "vue-skeletor";
+import ToastPlugin from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
-import Toast from "vue-toastification";
-// Import the CSS or use your own!
-import "vue-toastification/dist/index.css";
-import { Skeletor } from 'vue-skeletor';
-
-InertiaProgress.init({
-
-})
+InertiaProgress.init({});
 
 createInertiaApp({
     resolve: (name) => require(`./Pages/${name}`).default,
@@ -29,15 +25,16 @@ createInertiaApp({
         const app = createApp({ render: () => h(App, props) });
 
         app.config.globalProperties.$route = route;
-        app.use(plugin).mixin({ methods: { route } })
-        .mixin({ components: {
-             VueApexCharts,
-             Link,
-             Head,
-             Skeletor,
-            } });
+        app.use(plugin).mixin({ methods: { route } }).mixin({
+            components: {
+                VueApexCharts,
+                Link,
+                Head,
+                Skeletor,
+            },
+        });
+        app.use(ToastPlugin);
         app.use(PrimeVue);
-        app.use(Toast);
         app.mount(el);
     },
 });

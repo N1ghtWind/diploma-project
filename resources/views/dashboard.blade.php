@@ -35,7 +35,7 @@
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
                     @foreach ($products as $product)
-                        <form action="{{ route('products.show', ['product' => $product->id]) }}">
+                        <form class="h-full" action="{{ route('products.show', ['product' => $product->id]) }}">
                             <button type="submit">
                                 <div
                                     class="overflow-hidden border transform transition-all hover:-translate-y-2 duration-300 shadow-md hover:shadow-2xl rounded-lg w-96 md:w-80 lg:w-96 cursor-pointer m-auto">

@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Laravel\Scout\Searchable;
@@ -12,17 +13,21 @@ use Laravel\Scout\Searchable;
 
 class Product extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, Searchable;
+    use HasFactory, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',
         'description',
         'price',
         'quantity_unit',
+        'user_id',
+        'category_id',
+        'status',
     ];
 
     protected $casts = [
         'created_at' => 'date:Y-d-m H:i:s',
+        'updated_at' => 'date:Y-d-m H:i:s',
     ];
 
     public function orders()
@@ -32,6 +37,11 @@ class Product extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function toSearchableArray()

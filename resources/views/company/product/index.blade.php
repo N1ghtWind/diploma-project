@@ -68,7 +68,8 @@
                                                 <path
                                                     d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z">
                                                 </path>
-                                            </svg> <span>Last 7 Days</span> </button> <button tabindex="0"
+                                            </svg> <span>Last 7 Days</span> </button>
+                                        <button tabindex="0"
                                             class="flex items-center w-full xo py-1 px-3 cursor-pointer text-indigo-500"
                                             :class="selected === 2 & amp; & amp;
                                             'text-indigo-500'">
@@ -79,18 +80,19 @@
                                                 <path
                                                     d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z">
                                                 </path>
-                                            </svg> <span>Last Month</span> </button> <button tabindex="0"
-                                            class="flex items-center w-full xo py-1 px-3 cursor-pointer"
-                                            :class="selected === 3 & amp; & amp;
-                                            'text-indigo-500'"
-                                            :class="selected !== 3 & amp; & amp;
-                                            'invisible'"
-                                            width="12" height="9" viewBox="0 0 12 9">
+                                            </svg>
+                                            <span>Last Month</span>
+                                        </button>
+                                        <button tabindex="0"
+                                            class="flex items-center w-full xo py-1 px-3 cursor-pointer" width="12"
+                                            height="9" viewBox="0 0 12 9">
                                             <path
                                                 d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z">
                                             </path>
-                                            </svg> <span>Last 12 Months</span>
-                                        </button> <button tabindex="0"
+
+                                            <span>Last 12 Months</span>
+                                        </button>
+                                        <button tabindex="0"
                                             class="flex items-center w-full xo py-1 px-3 cursor-pointer"
                                             :class="selected === 4 & amp; & amp;
                                             'text-indigo-500'">
@@ -101,7 +103,8 @@
                                                 <path
                                                     d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z">
                                                 </path>
-                                            </svg> <span>All Time</span> </button> </div>
+                                            </svg> <span>All Time</span> </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="relative inline-flex">
@@ -151,6 +154,9 @@
                                             </th>
                                             <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div class="font-semibold text-left">Date added:</div>
+                                            </th>
+                                            <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div class="font-semibold text-left">Name:</div>
                                             </th>
                                             <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div class="font-semibold text-left">Price:</div>

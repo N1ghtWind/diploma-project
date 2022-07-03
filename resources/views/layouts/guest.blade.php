@@ -59,7 +59,7 @@
         <div class="container flex flex-wrap justify-between items-center mx-auto">
             <div class="flex items-center">
                 <a href="{{ URL::to('') }}">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
+                    <img src="{{ asset('assets/logo.png') }}" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
                 </a>
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Diploma</span>
             </div>

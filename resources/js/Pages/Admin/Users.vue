@@ -1,75 +1,107 @@
-<template>
-  <Layout sitename="Users">
-    <h1 class="text-gray-700">Users</h1>
-    <!-- <div class="flex w-3/5 flex-col gap-y-8">
+<script setup>
+import UserItem from './components/UserItem.vue';
+import Pagination from "../components/Pagination.vue";
+</script>
 
-        </div> -->
-    <div>
-      <VueApexCharts
-        width="400"
-        :options="chartOptions"
-        :series="series"
-      ></VueApexCharts>
-    </div>
-  </Layout>
+<template>
+
+    <Head>
+        <link rel="stylesheet" :href="css" />
+    </Head>
+    <Layout sitename="Users">
+        <div class="px-4 max-w-2xl m-auto" v-if="$page.props.flash.error">
+            <div v-for="(error, index) in $page.props.flash.error" :key="index"
+                class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                <span class="font-medium">{{ error }}</span>
+            </div>
+        </div>
+
+        <div class="bg-white by rounded-sm border border-slate-200">
+            <header class="mn mr flex gap-4 items-center">
+                <h2 class="g_ text-slate-800">
+                    All Users: <span class="yu gk">{{ user_count }}</span>
+                </h2>
+
+            </header>
+            <div>
+                <div class="lz">
+                    <table class="av oq">
+                        <thead class="gb g_ gq text-slate-500 hq ck cx border-slate-200">
+                            <tr>
+                                <th class="v_ wk xe vm co ut">
+                                    <span class="tc">Favourite</span>
+                                </th>
+                                <th class="v_ wk xe vm co">
+                                    <div class="g_ text-center">ID</div>
+                                </th>
+                                <th class="v_ wk xe vm co">
+                                    <div class="g_ text-center">Picture</div>
+                                </th>
+                                <th class="v_ wk xe vm co">
+                                    <div class="g_ text-center">Name</div>
+                                </th>
+                                <th class="v_ wk xe vm co">
+                                    <div class="g_">Email verification date</div>
+                                </th>
+                                <th class="v_ wk xe vm co">
+                                    <div class="g_">Registration date:</div>
+                                </th>
+                                <th class="v_ wk xe vm co">
+                                    <div class="g_">User type:</div>
+                                </th>
+                                <th class="v_ wk xe vm co"><span class="tc">Menu</span></th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm lg lb">
+                            <tr v-for="(user, index) in users.data" :key="index">
+                                <UserItem :user="user" />
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <Pagination :links="users.links" class="mt-6 flex justify-center"></Pagination>
+
+    </Layout>
+
+
+
 </template>
 <script>
 import Layout from "../Layout.vue";
 export default {
-  components: {
-    Layout,
-  },
-  data() {
-    return {
-      series: [
-        {
-          name: "Daily orders",
-          data: [31, 40, 28, 51, 42, 109, 100],
+    props: {
+        css: {
+            type: String,
+            default: "",
         },
-      ],
-
-      chartOptions: {
-        chart: {
-          height: 350,
-          type: "area",
-          legend: { show: false },
-          toolbar: {
-            show: false,
-          },
+        users: {
+            type: Object,
+            default: () => ({}),
         },
-
-        dataLabels: {
-          enabled: false,
+        user_count: {
+            type: Number,
+            default: 0,
         },
-        stroke: {
-          curve: "smooth",
-        },
-        xaxis: {
-          type: "datetime",
-          categories: [
-            "2018-09-19T00:00:00.000Z",
-            "2018-09-19T01:30:00.000Z",
-            "2018-09-19T02:30:00.000Z",
-            "2018-09-19T03:30:00.000Z",
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z",
-          ],
-        },
-        tooltip: {
-          x: {
-            format: "dd/MM/yy HH:mm",
-          },
-        },
-      },
-
-      toggleActive: false,
-    };
-  },
-  methods: {
-    toggleSideBar() {
-      this.toggleActive = !this.toggleActive;
     },
-  },
+    components: {
+        Layout,
+    },
+
+    mounted() {
+        this.users.data.forEach((user) => {
+            user.selected = false;
+        });
+    },
+    data() {
+        return {
+            toggleSelectAll: false,
+        };
+    },
+    methods: {
+
+    },
 };
 </script>

@@ -70,7 +70,7 @@
             <div class="px-4 flex flex-wrap justify-between items-center mx-auto">
                 <div class="flex items-center">
                     <a href="{{ URL::to('') }}">
-                        <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9"
+                        <img src="{{ asset('assets/logo.png') }}" class="mr-3 h-6 sm:h-9"
                             alt="Flowbite Logo">
                     </a>
                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Diploma</span>
@@ -104,7 +104,7 @@
                                             @click="open = false">
                                             <div class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
                                                 <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
-                                                    href="#">Settings</a>
+                                                    href="{{  route('carrier.settings.index')  }}">Settings</a>
                                             </div>
                                             <div
                                                 class="rounded-b-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
@@ -115,7 +115,7 @@
                                                         href="{{ route('logout') }}"
                                                         onclick="event.preventDefault();
                                                          this.closest('form').submit();">
-                                                        Signout</a>
+                                                        Sign out</a>
                                                 </form>
 
                                             </div>
@@ -135,6 +135,21 @@
                                         <a href="{{ route('company.product.index') }}"
                                             class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                                             My products</a>
+                                    </li>
+                                @endcan
+                                @can('viewAny', App\Models\ActiveDelivery::class)
+                                    <li>
+                                        <a href="{{ route('active-deliveries.index') }}"
+                                            class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                            Active Deliveries</a>
+                                    </li>
+                                @endcan
+
+                                @can('viewAny', App\Models\ActiveDelivery::class)
+                                    <li>
+                                        <a href="{{ route('deliveries.history') }}"
+                                            class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                            History</a>
                                     </li>
                                 @endcan
                                 <li>

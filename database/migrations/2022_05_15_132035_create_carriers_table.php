@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('success_deliveries');
             $table->boolean('is_online');
             $table->string('location');
+            $table->string('phone');
+            $table->string('contact')->nullable();
+            $table->longText('bio')->nullable();
             $table->timestamps();
         });
     }

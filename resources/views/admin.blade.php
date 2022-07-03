@@ -61,7 +61,7 @@
     {{-- CUSTOM JS --}}
     <script defer src="{{ asset('js/custom.js') }}"></script>
     <script defer src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
-
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
 </head>
 
 <body>

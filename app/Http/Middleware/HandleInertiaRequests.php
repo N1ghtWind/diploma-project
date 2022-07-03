@@ -46,13 +46,29 @@ class HandleInertiaRequests extends Middleware
                 return [
                     'user' => $request->user() ? [
                         'id' => $request->user()->id,
+                        'name' => $request->user()->name,
+                        'media' => $request?->user()?->userable?->media()?->first() ? [
+                            'id' => $request->user()->userable->media()->first()->id,
+                            'url' => $request->user()->userable->media()->first()->original_url,
+                        ] : null,
                     ] : null,
                 ];
+
             },
             'flash' =>  [
                 'success' => session()->get('success'),
-                'error' => $request->session()->get('error'),
+            'error' => $request->session()->get('error'),
             ],
+
+
+            'notifications' => $request?->user()?->is_admin() ? [
+                'admin' => [
+                    'count' => $request->user()->unreadNotifications()->count(),
+                    'data' => $request->user()->unreadNotifications()->get() ? $request->user()->unreadNotifications()->get()->each(function ($notification) {
+                        $notification->diff_time = $notification->created_at->diffForHumans();
+                    }) : null,
+                ],
+            ] : [],
         ]);
     }
 }

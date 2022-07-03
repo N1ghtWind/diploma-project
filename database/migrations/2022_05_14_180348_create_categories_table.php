@@ -16,12 +16,6 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            // $table->unsignedInteger('topic_id');
-            // $table->foreign('topic_id')
-            // ->references('id')
-            // ->on('topics')
-            // ->cascadeOnDelete();
-
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Carrier;
 use App\Models\Company;
 use App\Models\User;
@@ -37,13 +38,40 @@ class Userseeder extends Seeder
             'updated_at' => now(),
             'email_verified_at' => now(),
         ]);
-
         $company = Company::create([
             'name' => 'Maxi',
             'company_logo' => 'unknown.jpg',
 
         ]);
         $company->user()->save($user2);
+
+        $url = 'https://source.unsplash.com/random/600x600';
+        $company->addMediaFromUrl($url)->toMediaCollection();
+
+        //Create company #2
+
+        $user2 = User::create([
+            'name' => 'Roda',
+            'email' => 'roda@test.com',
+            'password' => '$2y$10$oXVToK0z419qfEcf9dJzAOZxX/jghOp9dw6eswqt3Kyu1Vsui5uum',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'email_verified_at' => now(),
+        ]);
+
+        $company = Company::create([
+            'name' => 'Roda',
+            'company_logo' => 'unknown.jpg',
+
+        ]);
+
+        $company->user()->save($user2);
+
+        $url = 'https://source.unsplash.com/random/600x600';
+        $company->addMediaFromUrl($url)->toMediaCollection();
+
+
+
 
 
         $user3 = User::create([
@@ -58,23 +86,110 @@ class Userseeder extends Seeder
         $carrier = Carrier::create([
             'success_deliveries' => 0,
             'is_online' => true,
-            'location' => 'Budapest',
+            'location' => 'Subotica',
+            'phone' => '063123456',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         $carrier->user()->save($user3);
+        $url = 'https://source.unsplash.com/random/600x600';
+        $carrier->addMediaFromUrl($url)->toMediaCollection();
 
-
-        //Create Address for user1
-        $user->addresses()->create([
-            'phone' => '06435435',
-            'full_name' => 'Józsi Test',
-            'address' => 'Test utca 1.',
-            'city' => 'Subotica',
-            'zip' => '12345',
-            'user_id' => $user->id,
+        $user3 = User::create([
+            'name' => 'CarrierTest',
+            'email' => 'carrier2@test.com',
+            'password' => '$2y$10$oXVToK0z419qfEcf9dJzAOZxX/jghOp9dw6eswqt3Kyu1Vsui5uum',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'email_verified_at' => now(),
         ]);
 
+        $carrier = Carrier::create([
+            'success_deliveries' => 0,
+            'is_online' => true,
+            'location' => 'Backa Topola',
+            'phone' => '0631243256',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $carrier->user()->save($user3);
+        $url = 'https://source.unsplash.com/random/600x600';
+        $carrier->addMediaFromUrl($url)->toMediaCollection();
+
+
+
+
+
+        $user3 = User::create([
+            'name' => 'CarrierRandom',
+            'email' => 'carrier3@test.com',
+            'password' => '$2y$10$oXVToK0z419qfEcf9dJzAOZxX/jghOp9dw6eswqt3Kyu1Vsui5uum',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'email_verified_at' => now(),
+        ]);
+
+        $carrier = Carrier::create([
+            'success_deliveries' => 0,
+            'is_online' => true,
+            'location' => 'Novi Sad',
+            'phone' => '06544323256',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $carrier->user()->save($user3);
+        $url = 'https://source.unsplash.com/random/600x600';
+        $carrier->addMediaFromUrl($url)->toMediaCollection();
+
+
+        $user3 = User::create([
+            'name' => 'CarrierRandom2',
+            'email' => 'carrier32@test.com',
+            'password' => '$2y$10$oXVToK0z419qfEcf9dJzAOZxX/jghOp9dw6eswqt3Kyu1Vsui5uum',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'email_verified_at' => now(),
+        ]);
+
+        $carrier = Carrier::create([
+            'success_deliveries' => 0,
+            'is_online' => true,
+            'location' => 'Belgrade',
+            'phone' => '06514323256',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $carrier->user()->save($user3);
+        $url = 'https://source.unsplash.com/random/600x600';
+        $carrier->addMediaFromUrl($url)->toMediaCollection();
+
+
+
+         // Create admin
+
+         $user4 = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@test.com',
+            'password' => '$2y$10$oXVToK0z419qfEcf9dJzAOZxX/jghOp9dw6eswqt3Kyu1Vsui5uum',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'email_verified_at' => now(),
+        ]);
+
+        $admin = Admin::create([
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $admin->user()->save($user4);
+
+        $url = 'https://source.unsplash.com/random/600x600';
+        $admin->addMediaFromUrl($url)->toMediaCollection();
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Nette\Utils\Random;
 
 class OrderSeeder extends Seeder
 {
@@ -17,12 +18,15 @@ class OrderSeeder extends Seeder
     public function run()
     {
 
-        Order::factory()->count(10)->create()->each(function($order) {
-            $randomProducts= Product::all()->random( rand(0, Product::all()->count()) )->pluck('id');
-            $order->products()->attach($randomProducts, [
-                'quantity' => rand(1, 10),
-                'price' => rand(1, 10),
-            ]);
+        Order::factory()->count(10)->create()->each(function ($order) {
+
+            $randomProducts = Product::all()->random(rand(1, Product::all()->count()))->pluck('id');
+            foreach ($randomProducts as $product) {
+                $order->products()->attach($product, [
+                    'quantity' => rand(1, 10),
+                    'price' => rand(1, 10),
+                ]);
+            }
         });
     }
 }

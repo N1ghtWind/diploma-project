@@ -6,17 +6,21 @@
     </x-slot>
     <div class="py-12">
         <div class="w-full mx-auto m-3 max-w-7xl bg-white p-12">
-            <div class="header flex items-end justify-between mb-12">
-                <div class="title">
+            <div class="header flex items-end justify-between mb-12 text-center">
+                <div class="title w-full">
                     <h1 class="text-4xl font-bold text-gray-800 mb-4">
                         Add Product
                     </h1>
                 </div>
             </div>
-            <form method="POST" enctype="multipart/form-data" action="{{ route('company.product.store') }}">
+            <form class="p-2 max-w-3xl m-auto" method="POST" enctype="multipart/form-data" action="{{ route('company.product.store') }}">
                 @csrf
                 <!-- Session Status -->
-                <x-auth-session-status class="mb-4" :status="session('status')" />
+                @if (session('status'))
+                    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                        <span class="font-medium">{{ session('status') }}</span>
+                    </div>
+                @endif
 
                 <!-- Validation Errors -->
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -35,6 +39,15 @@
                     <textarea type="text" id="desc" rows="4"
                         class="shadow-sm bg-gray-50 border  resize-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Product description..." name="desc" required></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="category" name="category" autocomplete="category" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-6">

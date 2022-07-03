@@ -146,15 +146,18 @@ class CartController extends Controller
 
             $charges = $intent->charges->data;
             $charge = $charges[0] ?? null;
+
             if (!isset($charge) || $charge === null) {
                 abort(404);
             }
 
             $status = 'failed';
 
+
             if ($charge->status === 'succeeded' && $charge->amount_captured === $charge->amount) {
                 $status = 'paid';
             }
+
             if ($charge->paid) {
 
                 $userId = auth()->user()->id;
@@ -164,10 +167,10 @@ class CartController extends Controller
                 $intent_id = session('intent_id');
                 $total_price = Cart::session($userId)->getSubTotal();
                 $total_price_without_fee = Cart::session($userId)->getSubTotalWithoutConditions();
-
-                if ($ammount_captured !== $charge->amount || (float)$ammount_captured / 100 !== $total_price) {
+                if ($ammount_captured !== $charge->amount || abs(((float)$ammount_captured / 100) - $total_price) > 0.02) {
                     abort(403);
                 }
+
 
                 $order = Order::create([
                     'user_id' => $userId,
@@ -184,8 +187,10 @@ class CartController extends Controller
                     ]);
                 }
 
-                User::all();
-                Notification::send(User::all(), new OrderNotification($order, User::find($userId)));
+                $admins = User::where('userable_type', 'App\Models\Admin')->get();
+                Notification::send($admins, new OrderNotification($order, User::find($userId)));
+
+                
                 $prices = (object)[
                     'total_price' => $total_price,
                     'total_price_without_fee' => $total_price_without_fee,

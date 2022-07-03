@@ -22,7 +22,8 @@ class OrderFactory extends Factory
             'paid_amount' => $this->faker->randomFloat(2, 0, 100),
             'intent_id' => $this->faker->uuid,
             'receipt_url' => $this->faker->url,
-            'created_at' => now()->addMinutes(rand(1, 60)),
+            'created_at' => $this->faker->dateTimeBetween('-1 week', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 week', 'now'),
         ];
     }
 }

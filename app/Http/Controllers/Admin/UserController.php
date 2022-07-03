@@ -17,8 +17,13 @@ class UserController extends Controller
     public function index()
     {
         Inertia::setRootView('admin');
-        $users = User::all();
-        return Inertia::render('Admin/Users', compact('users'));
+        $css = asset('css/custom-3.css');
+        $users = User::with('userable.media','address')->paginate(3);
+        return Inertia::render('Admin/Users',[
+            'users' => $users,
+            'user_count' => User::count(),
+            'css' => $css
+        ]);
     }
 
     /**

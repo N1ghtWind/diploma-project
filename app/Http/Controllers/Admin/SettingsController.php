@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactUsMessages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,10 +17,15 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        $messages = ContactUsMessages::orderBy('created_at', 'desc')->paginate(4);
+        $messages->each(function ($message) {
+            $message->diff_time = $message->created_at->diffForHumans();
+        });
 
         Inertia::setRootView('admin');
-        $users = User::all();
-        return Inertia::render('Admin/Settings', compact('users'));
+        return Inertia::render('Admin/Messages',[
+            'messages' => $messages,
+        ]);
     }
 
     /**

@@ -750,7 +750,6 @@ export default {
       this.filters = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
-    //   console.log("filters", this.filters.global.value);
     },
   },
 };

@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $css = asset('css/custom-2.css');
-        $products = Product::with('media')->paginate(2);
+        $products = Product::with('media')->withTrashed()->paginate(2);
         $products_count = Product::count();
 
         Inertia::setRootView('admin');
@@ -82,6 +82,24 @@ class ProductController extends Controller
         //
     }
 
+    public function activate(Request $request)
+    {
+        $product = Product::findOrFail(request('id'));
+        $product->update([
+            'status' => 'active'
+        ]);
+        return redirect()->back()->with('success', 'Product activated successfully');
+    }
+
+    public function deactivate(Request $request)
+    {
+        $product = Product::findOrFail(request('id'));
+        $product->update([
+            'status' => 'inactive'
+        ]);
+        return redirect()->back()->with('success', 'Product deactivated successfully');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -90,16 +108,45 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
+
         if ($request->has('products')) { {
                 if (count($request->products) > 0) {
                     foreach ($request->products as $product) {
                         $product = Product::find($product);
-                        $product->delete();
+
+
+                        if ($product) {
+                            $product->status = 'banned';
+                            $product->save();
+                            $product->delete();
+                        } else {
+                            return redirect()->back()->with('error', array('Product not found'));
+                        }
                     }
                 }
             }
             return Redirect::route('admin.products.index')
-            ->with('success', 'Products deleted successfully');
+                ->with('success', 'Products deleted successfully');
         }
+    }
+
+    public function unban(Request $request)
+    {
+        if($request->has('id')) {
+            $product = Product::withTrashed()->findOrFail(request('id'));
+            if($product) {
+                if($product->trashed()) {
+                    $product->restore();
+                    $product->status = 'inactive';
+                    $product->save();
+                    return redirect()->back()->with('success', 'Product unbanned successfully');
+                } else {
+                    return redirect()->back()->with('error', array('Product is not banned'));
+                }
+            } else {
+                return redirect()->back()->with('error', array('Product not found'));
+            }
+        }
+        return redirect()->back()->with('success', 'Product unbanned successfully');
     }
 }

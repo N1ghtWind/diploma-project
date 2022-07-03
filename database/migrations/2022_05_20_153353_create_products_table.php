@@ -20,12 +20,20 @@ return new class extends Migration
             $table->string('quantity_unit');
             $table->string('price');
             $table->unsignedInteger('user_id');
-            $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->unsignedInteger('category_id');
+            $table->enum('status', ['active', 'inactive','banned'])->default('inactive');
+            $table->string('reason')->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete();
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->cascadeOnDelete();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -29,6 +29,7 @@ class ProductSeeder extends Seeder
             'description' => 'Aspirin',
             'price' => 5,
             'quantity_unit' => '100g',
+            'category_id' => 1,
             'user_id' => User::where('userable_type', '=', 'App\Models\Company')->get()->pluck('id')->random(),
         ]);
         Product::create([
@@ -36,6 +37,7 @@ class ProductSeeder extends Seeder
             'description' => 'Carrot',
             'price' => 4,
             'quantity_unit' => '100g',
+            'category_id' => 2,
             'user_id' => User::where('userable_type', '=', 'App\Models\Company')->get()->pluck('id')->random(),
         ]);
 
@@ -44,6 +46,7 @@ class ProductSeeder extends Seeder
             'description' => 'Apple!',
             'price' => 3,
             'quantity_unit' => '100g',
+            'category_id' => 3,
             'user_id' => User::where('userable_type', '=', 'App\Models\Company')->get()->pluck('id')->random(),
         ]);
 

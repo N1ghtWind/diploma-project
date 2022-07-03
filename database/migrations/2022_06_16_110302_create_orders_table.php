@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status', ['paid', 'cancelled', 'refunded', 'failed']);
             $table->longText('receipt_url');
             $table->unsignedInteger('user_id');
+            $table->enum('delivery_status', ['assigned','pending','completed'])->default('pending');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

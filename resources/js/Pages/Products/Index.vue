@@ -80,10 +80,11 @@
       </div>
       <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
         <div v-for="(product, index) in products" :key="index">
-          <form :action="route('products.show', { product: product.id })">
-            <button type="submit">
+          <form class="h-full" :action="route('products.show', { product: product.id })">
+            <button class="h-full" type="submit">
               <div
                 class="
+                  h-full
                   overflow-hidden
                   border
                   transform
@@ -103,7 +104,7 @@
                 <img
                   alt="blog photo"
                   :src="product.media[0].original_url"
-                  class="object-cover rounded-xl w-64 m-auto"
+                  class="object-cover rounded-xl w-64 h-64 m-auto"
                 />
                 <div class="bg-white w-full p-4">
                   <p class="text-indigo-500 text-md font-medium">
@@ -137,7 +138,7 @@
                     <a href="#" class="block relative">
                       <img
                         alt="profil"
-                        src="https://benu.rs/images/documents/13244709-1342864532407039-3980967859900892105-n.png"
+                        :src="product.media[0].original_url"
                         class="mx-auto object-cover w-20"
                       />
                     </a>

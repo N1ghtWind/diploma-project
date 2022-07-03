@@ -6,7 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyProductRequest extends FormRequest
+class CompanyProductStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,12 @@ class CompanyProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
+            'name' => ['required', 'string', 'max:100', 'unique:products,name'],
             'desc' => ['required', 'string', 'max:255'],
             'quantity' => ['required', 'string', 'max:40'],
             'price' => ['required','numeric','digits_between:1,5'],
-            'image' => ['required', 'mimes:jpg,jpeg,png,webp'],
+            'category' => ['required', 'integer', 'exists:categories,id'],
+            'image' => ['required', 'mimes:jpg,jpeg,png,webp','max:2048','dimensions:ratio=1/1'],
         ];
     }
 }

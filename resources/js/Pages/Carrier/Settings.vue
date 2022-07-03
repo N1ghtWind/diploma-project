@@ -22,9 +22,16 @@
             </div>
         </div>
     </div>
-
     <main class="relative">
         <div class="max-w-screen-xl mx-auto pb-6 px-4 sm:px-6 lg:pb-16 lg:px-8">
+             <div v-if="$page.props.errors">
+                <div v-for="(error, index) in $page.props.errors" :key="index" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                    <span class="font-medium">{{ error }}</span>
+                </div>
+            </div>
+             <div v-if="$page.props.flash.success" class="p-4 m-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                <span class="font-medium"> {{ $page.props.flash.success }}</span>
+            </div>
             <div class="bg-white rounded-lg overflow-hidden">
                 <div class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
                     <aside class="lg:col-span-2">
@@ -47,7 +54,7 @@
                         </nav>
                     </aside>
 
-                    <form class="divide-y divide-gray-200 lg:col-span-10" action="#" method="POST">
+                    <div class="divide-y divide-gray-200 lg:col-span-10">
                         <!-- Profile section -->
                         <div class="py-6 px-4 sm:p-6 lg:pb-8">
                             <div>
@@ -61,14 +68,14 @@
                                     <div>
                                         <label for="business_mail" class="block text-sm font-medium my-1 text-gray-700">Business contact email</label>
                                         <div class="relative rounded-md shadow-sm max-w-md">
-                                            <input type="text" name="business_mail" id="business_mail" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-2 sm:text-sm rounded-md" placeholder="Business contact email">
+                                            <input v-model="user_data.user_contact" type="text" name="business_mail" id="business_mail" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-2 sm:text-sm rounded-md" placeholder="Business contact email">
                                         </div>
                                     </div>
 
                                     <div>
                                         <label for="bio" class="block text-sm font-medium my-1 text-gray-700">Bio</label>
                                         <div class="relative rounded-md shadow-sm max-w-md">
-                                            <textarea type="text" name="bio" id="bio" class="focus:ring-indigo-500 resize-none focus:border-indigo-500 block w-full pl-2 pr-2 sm:text-sm rounded-md" placeholder="Enter your bio here..."></textarea>
+                                            <textarea v-model="user_data.user_bio" rows="5" type="text" name="bio" id="bio" class="focus:ring-indigo-500 resize-none focus:border-indigo-500 block w-full pl-2 pr-2 sm:text-sm rounded-md" placeholder="Enter your bio here..."></textarea>
                                         </div>
                                     </div>
 
@@ -78,7 +85,7 @@
                                     <div class="mt-1 lg:hidden">
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 inline-block rounded-full overflow-hidden h-12 w-12" aria-hidden="true">
-                                                <img class="rounded-full h-full w-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=320&amp;h=320&amp;q=80" alt="">
+                                                <img class="rounded-full h-full w-full" :src="userImage" alt="">
                                             </div>
                                             <div class="ml-5 rounded-md shadow-sm">
                                                 <div class="group relative rounded-md py-2 px-3 flex items-center justify-center hover:bg-gray-50 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
@@ -86,18 +93,18 @@
                                                         <span>Change</span>
                                                         <span class="sr-only"> user photo</span>
                                                     </label>
-                                                    <input id="mobile-user-photo" name="user-photo" type="file" class="absolute w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
+                                                    <input @change="onFileChange" @input="avatar = $event.target.files[0]" id="mobile-user-photo" name="user-photo" type="file" class="absolute w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="hidden relative overflow-hidden lg:block">
-                                        <img class="relative w-40 h-40" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=320&amp;h=320&amp;q=80" alt="">
+                                        <img class="relative w-40 h-40" :src="userImage" alt="">
                                         <label @mouseover="hoverImage(true)" @mouseleave="hoverImage(false)" :class="image_hover ? 'opacity-100' : 'opacity-0'" for="desktop-user-photo" class="absolute inset-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center text-sm font-medium text-white">
                                             <span>Change</span>
                                             <span class="sr-only"> user photo</span>
-                                            <input type="file" id="desktop-user-photo" name="user-photo" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
+                                            <input @change="onFileChange" @input="avatar = $event.target.files[0]" type="file" id="desktop-user-photo" name="user-photo" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
                                         </label>
                                     </div>
                                 </div>
@@ -141,11 +148,12 @@
                                 </ul>
                             </div>
                             <div class="mt-4 py-4 px-4 flex justify-end sm:px-6">
-                                <button type="submit" class="ml-5 bg-indigo-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                                <button @click="saveData()" class="ml-5 bg-indigo-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+
             </div>
         </div>
     </main>
@@ -161,6 +169,20 @@ export default {
             type: Boolean,
             required: true,
         },
+        user_bio: {
+             validator: prop => typeof prop === 'string' || prop === null,
+        },
+        user_contact: {
+             validator: prop => typeof prop === 'string' || prop === null,
+        },
+        user_profile_picture : {
+            type: String,
+            required: true,
+        },
+        is_carrier: {
+            type: Boolean,
+            required: true,
+        },
     },
 
     data() {
@@ -168,11 +190,16 @@ export default {
             user_online: this.is_online,
             image_hover: false,
             show_alert: true,
+            user_data: {
+                user_bio: this.user_bio,
+                user_contact: this.user_contact,
+            },
+            userImage: this.user_profile_picture,
+            avatar: null,
         };
     },
 
     mounted() {
-
     },
 
     methods: {
@@ -187,7 +214,42 @@ export default {
         },
         closeAlert() {
             this.show_alert = false;
-        }
+        },
+        saveData() {
+
+
+            Inertia.post(route('carrier.settings.update_profile'), {
+                _method: 'put',
+                bio: this.user_data.user_bio,
+                contact: this.user_data.user_contact,
+                image: this.avatar,
+            },
+            {
+            forceFormData: true,
+            }
+            );
+        },
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files
+            if (!files.length) {
+            return
+            }
+
+            this.createImage(files[0])
+        },
+        createImage(file) {
+            if (file.type.match(['image.*'])) {
+                var reader = new FileReader()
+                var vm = this
+                reader.onload = (e) => {
+                vm.userImage = e.target.result
+                }
+                reader.readAsDataURL(file)
+            }
+            else {
+                return
+            }
+        },
 
     },
 };
