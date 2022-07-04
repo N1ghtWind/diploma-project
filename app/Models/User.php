@@ -54,6 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->morphTo();
     }
 
+    public function medias() {
+        return $this->getMedia();
+    }
+
     public function is_company()
     {
 

@@ -70,8 +70,7 @@
             <div class="px-4 flex flex-wrap justify-between items-center mx-auto">
                 <div class="flex items-center">
                     <a href="{{ URL::to('') }}">
-                        <img src="{{ asset('assets/logo.png') }}" class="mr-3 h-6 sm:h-9"
-                            alt="Flowbite Logo">
+                        <img src="{{ asset('assets/logo.png') }}" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
                     </a>
                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Diploma</span>
                 </div>
@@ -102,10 +101,21 @@
                                             class="absolute z-50 mt-2 w-48 rounded-md shadow-lg origin-top-right right-0
                               divide-y  bg-gray-700 divide-gray-600"
                                             @click="open = false">
-                                            <div class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
+
+                                            @user
+                                                <div
+                                                    class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
+                                                    <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
+                                                        href="{{ route('user.settings.index') }}">Settings</a>
+                                                </div>
+                                            @enduser
+                                            @carrier
+                                            <div
+                                                class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
                                                 <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
-                                                    href="{{  route('carrier.settings.index')  }}">Settings</a>
+                                                    href="{{ route('carrier.settings.index') }}">Settings</a>
                                             </div>
+                                            @endcarrier
                                             <div
                                                 class="rounded-b-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
                                                 <!-- Authentication -->

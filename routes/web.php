@@ -12,6 +12,7 @@ use App\Http\Controllers\Company\ProductController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\User\ProductController as UserProductController;
+use App\Http\Controllers\User\SettingsController as UserSettingsController;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -73,10 +74,26 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
 //     return view('company.create');
 // })->middleware(['auth', 'verified', 'company']);
 
+
+
+//Carrier Settings
 Route::resource('settings/carrier', CarrierSettingsController::class)->names('carrier.settings')->only(['index','edit','store']);
 Route::put('settings/carrier/update', [CarrierSettingsController::class, 'update_carrier_data'])->name('carrier.settings.update_profile');
 Route::post('settings/carrier/update-account', [CarrierSettingsController::class, 'update_carrier_account'])->name('carrier.settings.update_account');
 Route::get('/settings/carrier/account', [CarrierSettingsController::class, 'account'])->name('carrier.settings.account');
+
+
+//User Settings
+Route::resource('settings/user', UserSettingsController::class)->names('user.settings')->only(['index','edit','store']);
+Route::get('/settings/user/account', [ UserSettingsController::class, 'account'])->name('user.settings.account');
+Route::put('settings/user/update', [UserSettingsController::class, 'update_user_data'])->name('user.settings.update_profile');
+// Route::put('settings/carrier/update', [CarrierSettingsController::class, 'update_carrier_data'])->name('carrier.settings.update_profile');
+// Route::post('settings/carrier/update-account', [CarrierSettingsController::class, 'update_carrier_account'])->name('carrier.settings.update_account');
+// Route::get('/settings/carrier/account', [CarrierSettingsController::class, 'account'])->name('carrier.settings.account');
+
+
+
+
 
 
 Route::resource('active-deliveries', ActiveDeliveryController::class)->only(['index', 'show']);
