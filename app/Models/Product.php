@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Laravel\Scout\Searchable;
+use Illuminate\Support\Str;
 
 
 class Product extends Model implements HasMedia
@@ -44,6 +45,11 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Category::class);
     }
 
+    public function with_trashed()
+    {
+        return $this->withTrashed();
+    }
+
     public function toSearchableArray()
     {
         return [
@@ -53,6 +59,12 @@ class Product extends Model implements HasMedia
             'quantity_unit' => $this->quantity_unit,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
         ];
+    }
+
+    public function limit_description()
+    {
+
+        return Str::limit($this->description, 40);
     }
 
 

@@ -110,12 +110,19 @@
                                                 </div>
                                             @enduser
                                             @carrier
-                                            <div
-                                                class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
-                                                <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
-                                                    href="{{ route('carrier.settings.index') }}">Settings</a>
-                                            </div>
+                                                <div
+                                                    class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
+                                                    <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
+                                                        href="{{ route('carrier.settings.index') }}">Settings</a>
+                                                </div>
                                             @endcarrier
+                                            @admin
+                                                <div
+                                                    class="rounded-t-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
+                                                    <a class="block px-4 py-2 text-sm leading-5 font-semibold text-gray-100 transition duration-150 ease-in-out"
+                                                        href="{{ route('dashboard.index') }}">Admin Panel</a>
+                                                </div>
+                                            @endadmin
                                             <div
                                                 class="rounded-b-md ring-1 text-white ring-black ring-opacity-5 py-1 hover:bg-gray-500 bg-gray-700 divide-gray-600 hover:text-white">
                                                 <!-- Authentication -->

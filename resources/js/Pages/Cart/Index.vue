@@ -5,11 +5,7 @@
   </Head>
   <div class="py-12">
     <div class="mb-3 max-w-7xl m-auto">
-      <div class="flex text-sm font-medium text-slate-400 lt">
-        <span class="text-indigo-500">Home</span>
-        <span>-&gt;</span>
-        <span class="text-slate-500">Cart</span>
-      </div>
+
     </div>
     <div class="w-full mx-auto m-3 max-w-7xl bg-white p-12">
       <div class="mt-6 text-left">

@@ -31,7 +31,7 @@ class Company extends Model implements HasMedia
 
     public function attachment()
     {
-        return $this->media()->where('collection_name', 'logo');
+        return $this->media();
     }
 
     public function url() {

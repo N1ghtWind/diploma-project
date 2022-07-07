@@ -28,4 +28,9 @@ class Carrier extends Model implements HasMedia
     public function active_deliveries() {
         return $this->hasMany(ActiveDelivery::class);
     }
+
+    public function attachment()
+    {
+        return $this->media()->where('collection_name', 'profile');
+    }
 }

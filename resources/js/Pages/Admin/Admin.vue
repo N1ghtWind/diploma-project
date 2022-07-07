@@ -11,13 +11,12 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 <template>
     <Layout sitename="Admin">
         <h1 class="text-gray-700">Dashboard</h1>
-        <div>
+        <div style="width: 95%;">
             <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
                 :dataset-id-key="datasetIdKey" :plugins="plugins" :css-classes="cssClasses" :styles="styles"
                 :width="width" :height="height" />
         </div>
         <div>
-
             <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                 <div class="px-4 py-5 bg-indigo-400 shadow rounded-lg overflow-hidden sm:p-6">
                     <dt class="text-sm font-medium text-gray-300 truncate">
@@ -102,7 +101,6 @@ export default {
         Layout,
     },
     mounted() {
-        console.log(this.get_daily_created_orders_last_week);
     },
     data() {
         return {

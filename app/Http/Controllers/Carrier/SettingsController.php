@@ -418,7 +418,6 @@ class SettingsController extends Controller
      */
     public function index()
     {
-
         $is_online = null;
         if (auth()->user()->userable->is_online) {
             $is_online = true;

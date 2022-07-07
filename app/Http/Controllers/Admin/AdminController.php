@@ -28,7 +28,7 @@ class AdminController extends Controller
 
         $get_daily_created_orders_last_week =
             Order::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->where('created_at', '>=', Carbon::now()->subDays(7))->where('created_at', '<=', Carbon::now())
             ->groupBy('date')
             ->get();
 

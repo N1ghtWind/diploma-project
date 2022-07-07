@@ -19,6 +19,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 
+
+
 Route::get('/', [DashboardController::class, 'index'])->name('index');
 
 Route::get('test', function () {
@@ -87,7 +89,7 @@ Route::get('/settings/carrier/account', [CarrierSettingsController::class, 'acco
 Route::resource('settings/user', UserSettingsController::class)->names('user.settings')->only(['index','edit','store']);
 Route::get('/settings/user/account', [ UserSettingsController::class, 'account'])->name('user.settings.account');
 Route::put('settings/user/update', [UserSettingsController::class, 'update_user_data'])->name('user.settings.update_profile');
-// Route::put('settings/carrier/update', [CarrierSettingsController::class, 'update_carrier_data'])->name('carrier.settings.update_profile');
+Route::put('settings/carrier/update', [UserSettingsController::class, 'update_carrier_account'])->name('user.settings.update_profile');
 // Route::post('settings/carrier/update-account', [CarrierSettingsController::class, 'update_carrier_account'])->name('carrier.settings.update_account');
 // Route::get('/settings/carrier/account', [CarrierSettingsController::class, 'account'])->name('carrier.settings.account');
 
@@ -104,9 +106,9 @@ Route::get('/deliveries/history', [ActiveDeliveryController::class, 'history'])-
 
 Route::get('/contact-us',[ContactUsController::class, 'index'])->name('contact-us');
 Route::post('/contact-us',[ContactUsController::class, 'store'])->name('contact-us.store');
-
-
 Route::fallback(function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+
 require __DIR__ . '/auth.php';

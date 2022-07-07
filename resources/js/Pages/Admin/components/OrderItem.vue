@@ -13,16 +13,7 @@ import Pagination from "../../components/Pagination.vue"
             </label>
         </div>
     </td>
-    <td class="v_ wk xe vm co ut">
-        <div class="flex items-center td">
-            <button>
-                <svg class="ue on ap db ym" viewBox="0 0 16 16">
-                    <path d="M8 0L6 5.934H0l4.89 3.954L2.968 16 8 12.223 13.032 16 11.11 9.888 16 5.934h-6L8 0z"></path>
-                </svg>
-            </button>
-        </div>
-    </td>
-    <td class="v_ wk xe vm co">
+    <td class="v_ wk xe vm whitespace-pre-wrap">
         <div class="flex items-center">
 
             <div class="gk text-slate-800">{{ order.intent_id }}</div>
@@ -33,9 +24,6 @@ import Pagination from "../../components/Pagination.vue"
     </td>
     <td class="v_ wk xe vm co">
         <div class="text-center">{{ order.delivery_status }}</div>
-    </td>
-    <td class="v_ wk xe vm co">
-        <div class="gp">€{{ order.receipt_url }}</div>
     </td>
     <td class="v_ wk xe vm co">
         <div class="text-center gk yj">{{ order.created_at }}</div>
@@ -190,14 +178,20 @@ import Pagination from "../../components/Pagination.vue"
                                             Order Information </DialogTitle>
                                         <div class="mt-2">
                                             <p class="text-sm text-gray-500">
-                                                Buyer name: {{ order.user.name }}
+                                                <span class="font-bold">Buyer name:</span> {{ order.user.name }}
                                             </p>
                                             <p class="text-sm text-gray-500">
-                                                Buyer email: {{ order.user.email }}
+                                                <span class="font-bold">Buyer email:</span> {{ order.user.email }}
                                             </p>
                                             <p class="text-sm text-gray-500">
-                                                Buyer registration date: {{ order.user.created_at }}
+                                                <span class="font-bold">Buyer registration date:</span> {{
+                                                        order.user.created_at
+                                                }}
                                             </p>
+                                            <div class="text-sm text-gray-500">
+                                                <p class="font-bold">Recepit URL:</p>
+                                                <span style="overflow-wrap: anywhere;">{{ order.receipt_url }}</span>
+                                            </div>
                                         </div>
                                         <ul role="list" class="divide-y divide-gray-200">
                                             <li v-for="(product, index) in order.products_with_trashed" :key="index"

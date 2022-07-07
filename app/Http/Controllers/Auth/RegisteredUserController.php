@@ -420,7 +420,7 @@ class RegisteredUserController extends Controller
 
     public function indexCompany()
     {
-        return view('company.register');
+        return view('company.register', ['cities' => $this->cities]);
     }
 
     public function indexCarrier()
@@ -446,11 +446,12 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'city' =>   ['required','string', Rule::in($this->cities)],
+            'city' =>   ['required', 'string', Rule::in($this->cities)],
             'phone' => ['required', 'string', 'max:12', 'unique:addresses'],
             'address' => ['required', 'string', 'max:255'],
             'zip' => ['required', 'string', 'max:255'],
             'full_name' => ['required', 'string', 'max:255'],
+
 
         ]);
 
@@ -484,6 +485,11 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'logo' => ['required', 'mimes:jpg,jpeg,png'],
+            'city' =>   ['required', 'string', Rule::in($this->cities)],
+            'phone' => ['required', 'string', 'max:12', 'unique:addresses'],
+            'address' => ['required', 'string', 'max:255'],
+            'zip' => ['required', 'string', 'max:255'],
+            'full_name' => ['required', 'string', 'max:255'],
 
         ]);
 
@@ -499,12 +505,21 @@ class RegisteredUserController extends Controller
 
         ]);
 
+        Address::create([
+            'user_id' => $user->id,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'zip' => $request->zip,
+            'full_name' => $request->full_name,
+        ]);
+
         if ($request->has('logo')) {
             $file = $request->file('logo');
 
             $filename = md5(Str::uuid() . time()) . '.' . $file->getClientOriginalExtension();
 
-            $company->addMedia($file)->usingName('company_logos')->usingFileName($filename)->toMediaCollection('logo');
+            $company->addMedia($file)->usingName('company_logos')->usingFileName($filename)->toMediaCollection();
         }
         $company->update([
             'company_logo' => 'company_logos/' . $company->attachment->first()->file_name
@@ -527,8 +542,14 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'location' =>   ['required','string', Rule::in($this->cities)],
+            'location' =>   ['required', 'string', Rule::in($this->cities)],
+            'phone' => ['required', 'string', 'max:12', 'unique:addresses'],
+            'address' => ['required', 'string', 'max:255'],
+            'profile' => ['required', 'mimes:jpg,jpeg,png', 'max:2048', 'dimensions:ratio=1/1'],
+            'zip' => ['required', 'string', 'max:255'],
+            'full_name' => ['required', 'string', 'max:255'],
         ]);
+
 
         $user = User::create([
             'name' => $request->name,
@@ -536,12 +557,34 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // success_deliveries	is_online	location
+        Address::create([
+            'user_id' => $user->id,
+            'city' => $request->location,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'zip' => $request->zip,
+            'full_name' => $request->full_name,
+        ]);
+
+
+
+
         $carrier = Carrier::create([
             'success_deliveries' => 0,
             'is_online' => false,
-            'location' => $request->location
+            'location' => $request->location,
+            'phone' => $request->phone,
         ]);
+
+        if ($request->has('profile')) {
+            $file = $request->file('profile');
+
+            $filename = md5(Str::uuid() . time()) . '.' . $file->getClientOriginalExtension();
+
+            $carrier->addMedia($file)->usingName('profile_picture')->usingFileName($filename)->toMediaCollection();
+        }
+
+
 
         $carrier->user()->save($user);
 

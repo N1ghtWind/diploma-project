@@ -3,7 +3,8 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 </script>
 
 <template>
-    <div style="width: calc(100% - 80px)" class="flex min-h-screen w-full bg-white font-sans  focus-visible:outline-none">
+    <div
+        class="flex min-h-screen w-full bg-white font-sans  focus-visible:outline-none">
         <div class="sidebar" :class="{ open: toggleActive }" ref="sidebar">
             <div class="logo-details">
                 <i class="fa-brands fa-css3-alt icon"></i>
@@ -20,14 +21,14 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
                     <span class="tooltip">Dashboard</span>
                 </li>
                 <li>
-                    <Link  class="focus-visible:outline-none" :href="$route('admin.products.index')">
+                    <Link class="focus-visible:outline-none" :href="$route('admin.products.index')">
                     <i class="bx bxs-package"></i>
                     <span class="links_name">Products</span>
                     </Link>
                     <span class="tooltip">Products</span>
                 </li>
                 <li>
-                    <Link  class="focus-visible:outline-none" :href="$route('user.index')">
+                    <Link class="focus-visible:outline-none" :href="$route('user.index')">
                     <i class="bx bx-user"></i>
                     <span class="links_name">User</span>
                     </Link>
@@ -41,14 +42,14 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
           <span class="tooltip">Messages</span>
         </li> -->
                 <li>
-                    <Link  class="focus-visible:outline-none" :href="$route('order.index')">
+                    <Link class="focus-visible:outline-none" :href="$route('order.index')">
                     <i class="bx bx-cart-alt"></i>
                     <span class="links_name">Order</span>
                     </Link>
                     <span class="tooltip">Order</span>
                 </li>
                 <li>
-                    <Link  class="focus-visible:outline-none" :href="$route('admin.messages.index')">
+                    <Link class="focus-visible:outline-none" :href="$route('admin.messages.index')">
                     <i class="bx bx-message"></i>
                     <span class="links_name">Message</span>
                     </Link>
@@ -56,11 +57,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
                 </li>
 
                 <li>
-                    <Link  class="focus-visible:outline-none" method="post" :href="$route('admin.logout')">
-                    <i class="bx bx-exit"></i>
-                    <span class="links_name">Logout</span>
-                    </Link>
-                    <span class="tooltip">Logout</span>
+                    <form ref="form" method="POST" :action="$route('logout')">
+                        <input type="hidden" name="_token" :value="$page.props._token">
+                        <a class="focus-visible:outline-none" :href="$route('logout')" @click.prevent="logout()">
+                            <i class="bx bx-exit"></i>
+                            <span class="links_name">Logout</span>
+                        </a>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -89,46 +92,52 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
                                                 d="M9 16.75C9 16.75 9 19.25 12 19.25C15 19.25 15 16.75 15 16.75">
                                             </path>
                                         </svg>
-                                        <div v-show="this.$page.props.notifications.admin.count > 0" class="absolute bottom-6 right-1 flex h-5 w-5">
+                                        <div v-show="this.$page.props.notifications.admin.count > 0"
+                                            class="absolute bottom-6 right-1 flex h-5 w-5">
                                             <span
                                                 class="absolute border-0 outline-none inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75" />
                                             <span style="font-size: 14px"
-                                                class="h-5 w-5 block text-white rounded-full bg-indigo-400">{{ $page.props.notifications.admin.count }}</span>
+                                                class="h-5 w-5 block text-white rounded-full bg-indigo-400">{{
+                                                        $page.props.notifications.admin.count
+                                                }}</span>
                                         </div>
                                     </button>
                                 </MenuButton>
                             </div>
                             <div v-show="open">
-                            <transition enter-active-class="transition ease-out duration-100"
-                                enter-from-class="transform opacity-0 scale-95"
-                                enter-to-class="transform opacity-100 scale-100"
-                                leave-active-class="transition ease-in duration-75"
-                                leave-from-class="transform opacity-100 scale-100"
-                                leave-to-class="transform opacity-0 scale-95">
-                                <MenuItems static
-                                    class="origin-top-right absolute right-0 mt-2 w-max rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <div v-show="this.$page.props.notifications.admin.count > 0" class="py-1">
-                                        <MenuItem v-for="(notification,index) in this.$page.props.notifications.admin.data" :key="index" v-slot="{ active }">
-                                        <a href="#"
-                                            :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']"
-                                            class="flex items-center px-4 py-3 border-b hover:bg-gray-100">
-                                            <p class="text-gray-600 text-sm mx-2 flex gap-8 justify-between">
-                                                <span class="font-bold" href="#">{{ notification.data.user.name }} <span class="font-normal"> made an order.</span></span>
-                                                <span class="text-gray-400">{{ notification.diff_time }}</span>
-                                            </p>
-                                        </a>
-                                        </MenuItem>
-                                        <a @click="markNotificationAsRead()"
-                                            class="block cursor-pointer rounded-md bg-indigo-500 text-white text-center font-bold py-2">Mark
-                                            all as read</a>
-                                    </div>
-                                </MenuItems>
-                            </transition>
+                                <transition enter-active-class="transition ease-out duration-100"
+                                    enter-from-class="transform opacity-0 scale-95"
+                                    enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="transform opacity-100 scale-100"
+                                    leave-to-class="transform opacity-0 scale-95">
+                                    <MenuItems static
+                                        class="origin-top-right absolute right-0 mt-2 w-max rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <div v-show="this.$page.props.notifications.admin.count > 0" class="py-1">
+                                            <MenuItem
+                                                v-for="(notification, index) in this.$page.props.notifications.admin.data"
+                                                :key="index" v-slot="{ active }">
+                                            <a href="#"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']"
+                                                class="flex items-center px-4 py-3 border-b hover:bg-gray-100">
+                                                <p class="text-gray-600 text-sm mx-2 flex gap-8 justify-between">
+                                                    <span class="font-bold" href="#">{{ notification.data.user.name }}
+                                                        <span class="font-normal"> made an order.</span></span>
+                                                    <span class="text-gray-400">{{ notification.diff_time }}</span>
+                                                </p>
+                                            </a>
+                                            </MenuItem>
+                                            <a @click="markNotificationAsRead()"
+                                                class="block cursor-pointer rounded-md bg-indigo-500 text-white text-center font-bold py-2">Mark
+                                                all as read</a>
+                                        </div>
+                                    </MenuItems>
+                                </transition>
                             </div>
                         </Menu>
                     </div>
                     <button
-                        class="flex h-11 items-center justify-center rounded-full bg-gray-100 px-2 text-gray-400 hover:text-indigo-500">
+                        class="flex h-11 items-center justify-center rounded-full bg-gray-100 px-6 text-gray-400 hover:text-indigo-500 xs:px-4">
                         <img :src="$page.props.auth.user.media.url" alt="" class="h-8 w-8 rounded-full object-cover" />
                         <span class="pl-2 text-sm">{{ $page.props.auth.user.name }}</span>
                     </button>
@@ -155,6 +164,9 @@ export default {
             toggleActive: false,
         };
     },
+    mounted() {
+
+    },
 
     methods: {
         toggleSideBar() {
@@ -164,6 +176,9 @@ export default {
             Inertia.post(route('admin.notifications.read'), {
 
             });
+        },
+        logout() {
+            this.$refs.form.submit();
         },
     },
 };
@@ -186,6 +201,7 @@ export default {
     font-family: "Poppins", sans-serif;
 
 }
+
 *:focus-visible {
     outline: none;
 }

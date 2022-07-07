@@ -47,9 +47,7 @@ import OrderItem from "./components/OrderItem.vue";
                                         </label>
                                     </div>
                                 </th>
-                                <th class="v_ wk xe vm co ut">
-                                    <span class="tc">Favourite</span>
-                                </th>
+
                                 <!-- name,description,quantity_unit,price,created_at,updated_at -->
                                 <th class="v_ wk xe vm co">
                                     <div class="g_ text-center">Intent ID</div>
@@ -59,9 +57,6 @@ import OrderItem from "./components/OrderItem.vue";
                                 </th>
                                 <th class="v_ wk xe vm co">
                                     <div class="g_">Status</div>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_">Reception URL</div>
                                 </th>
                                 <th class="v_ wk xe vm co">
                                     <div class="g_">Created At:</div>

@@ -4,48 +4,36 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 </script>
 
 <template>
-    <td class="v_ wk xe vm co ut">
-        <div class="flex items-center">
-            <label class="inline-flex">
-                <span class="tc">Select</span>
-                <input class="table-item to" v-model="user.selected" type="checkbox" />
-            </label>
-        </div>
+    <td class="px-6 py-4 text-center">
+        <div class="text-center font-bold">{{ user.id }}</div>
+
     </td>
-    <td class="v_ wk xe vm co ut">
-        <div class="flex items-center td">
-            <div class="g_ text-center">{{ user.id }}</div>
-        </div>
+    <td class="px-6 py-4 text-center">
+        <div class="text-center">{{ user.name }}</div>
+        <p class="text-center text-gray-400 font-semibold">{{ user.email }}</p>
     </td>
-    <td class="v_ wk xe vm co">
+    <td class="px-6 py-4">
         <div class="flex items-center justify-center">
             <div class="h-20 w-20 ap mr-2 _f">
-                <img v-if="user?.userable?.media[0]?.original_url" class=""
-                    :src="user?.userable?.media[0]?.original_url" alt="User 01" />
+                <img v-if="checkIfUserHasMedia(user)" class="" :src="getUserMedia(user)" alt="User 01" />
             </div>
         </div>
     </td>
-    <td class="v_ wk xe vm co">
-        <div class="text-center">{{ user.name }}</div>
-    </td>
-    <td class="v_ wk xe vm co">
+    <td class="px-6 py-4 text-center">
         <div class="text-center">{{ user.email_verified_at }}</div>
     </td>
-    <td class="v_ wk xe vm co">
+    <td class="px-6 py-4 text-center">
         <div class="gp">{{ user.created_at }}</div>
     </td>
-    <td class="v_ wk xe vm co">
+    <td class="px-6 py-4 text-center">
         <div class="text-center gk yj">{{ getUserType(user) }}</div>
     </td>
-
-    <td class="v_ wk xe vm co ut">
-        <button @click="openInfoModal = !openInfoModal"
-            class="yu xm rounded-full border  mx-4 border-green-600 bg-green-600">
-            <i class="fa-solid fa-info uu of db flex justify-center text-gray-100 items-center"></i>
+    <td class="px-6 py-4 text-center">
+        <button  @click="openInfoModal = !openInfoModal" class="yu xm rounded-full border mx-8 border-green-600 bg-green-600">
+            <i class="fa-solid fa-info uu of db flex justify-center text-gray-100 items-center">
+            </i>
         </button>
     </td>
-
-
     <TransitionRoot as="template" :show="openInfoModal">
         <Dialog as="div" class="relative z-10" @close="openInfoModal = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -91,6 +79,19 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
                                         <div v-if="user?.address" class="mt-2">
                                             <p class="text-sm text-gray-500">
                                                 <span class="font-bold">Phone number:</span> {{ user.address.phone }}
+                                            </p>
+                                        </div>
+
+                                        <div v-if="user?.userable?.is_online === 0 || user?.userable?.is_online === 1">
+                                            <p class="text-sm text-gray-500">
+                                                <span class="font-bold">Is online:</span>
+                                                <span v-if="user?.userable?.is_online === 1" class="bg-green-500 text-white px-2 mx-2 rounded-md">Yes</span>
+                                                <span v-else class="bg-rose-500 text-white px-2 mx-2 rounded-md">No</span>
+                                            </p>
+                                        </div>
+                                        <div v-if="user?.userable?.location">
+                                            <p class="text-sm text-gray-500">
+                                                <span class="font-bold">Location:</span> {{ user.userable.location }}
                                             </p>
                                         </div>
                                     </div>
@@ -143,6 +144,24 @@ export default {
                 return 'Client';
             }
         },
+
+        checkIfUserHasMedia(user) {
+            if (user?.userable?.media?.length > 0 || user?.media?.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        getUserMedia(user) {
+            let user_type = this.getUserType(user);
+            if (user_type === 'Admin' || user_type === 'Carrier' || user_type === 'Company') {
+                return user?.userable?.media[0]?.original_url;
+            }
+            else {
+                return user?.media[0]?.original_url;
+            }
+        }
     },
 };
 </script>

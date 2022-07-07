@@ -18,7 +18,7 @@ class OrderSeeder extends Seeder
     public function run()
     {
 
-        Order::factory()->count(10)->create()->each(function ($order) {
+        Order::factory()->count(20)->create()->each(function ($order) {
 
             $randomProducts = Product::all()->random(rand(1, Product::all()->count()))->pluck('id');
             foreach ($randomProducts as $product) {

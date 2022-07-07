@@ -29,8 +29,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $my_products = User::find(auth()->user()->id)->products()->with('media')->simplePaginate(2);
-        $count_of_my_products = User::find(auth()->user()->id)->products()->count();
+        $my_products = User::find(auth()->user()->id)->with_trashed_products()->with('media')->simplePaginate(2);
+        $count_of_my_products = User::find(auth()->user()->id)->with_trashed_products()->count();
 
         foreach ($my_products as $product) {
             $product->openModal = false;

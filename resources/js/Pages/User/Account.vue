@@ -154,7 +154,7 @@ export default {
 
     methods: {
         updateAccount() {
-            Inertia.post(route('carrier.settings.update_account'), {
+            Inertia.post(route('user.settings.update_profile'), {
                 email: this.data_user.email,
                 phone: this.data_user.phone,
                 location: this.data_user.location,

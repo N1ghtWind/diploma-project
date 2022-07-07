@@ -27,21 +27,7 @@
                             </div>
 
                             <div class="relative">
-                                <button
-                                    class="btn justify-between min-w-44 bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
-                                    aria-label="Select date range" aria-haspopup="true" :aria-expanded="open"
-                                    aria-expanded="false"> <span class="flex items-center">
-                                        <i
-                                            class="fa-solid fa-calendar text-slate-500 fill-current flex-shrink-0 w-4 h-4 mr-2">
-                                        </i>
 
-                                        <span>Last
-                                            Month
-                                        </span>
-
-                                    </span>
-                                    <i class="fa-solid fa-angle-down flex-shrink-0 ml-1 fill-current h-3 w-3"></i>
-                                </button>
 
 
                                 <div class="bg-white border mt-1 z-10 top-full right-0 absolute pt-1 pb-1 w-full overflow-hidden border-slate-200"
@@ -69,20 +55,7 @@
                                                     d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z">
                                                 </path>
                                             </svg> <span>Last 7 Days</span> </button>
-                                        <button tabindex="0"
-                                            class="flex items-center w-full xo py-1 px-3 cursor-pointer text-indigo-500"
-                                            :class="selected === 2 & amp; & amp;
-                                            'text-indigo-500'">
-                                            <svg class="flex-shrink-0 mr-2 fill-current text-indigo-500"
-                                                :class="selected !== 2 & amp; & amp;
-                                                'invisible'"
-                                                width="12" height="9" viewBox="0 0 12 9">
-                                                <path
-                                                    d="M10.28.28L3.989 6.575 1.695 4.28A1 1 0 00.28 5.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28.28z">
-                                                </path>
-                                            </svg>
-                                            <span>Last Month</span>
-                                        </button>
+
                                         <button tabindex="0"
                                             class="flex items-center w-full xo py-1 px-3 cursor-pointer" width="12"
                                             height="9" viewBox="0 0 12 9">
@@ -108,17 +81,6 @@
                                 </div>
                             </div>
                             <div class="relative inline-flex">
-                                <button
-                                    class="btn bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600">
-                                    <span
-                                        class="absolute w-px h-px p-0 -m-px overflow-hidden react whitespace-nowrap border-0">Filter</span>
-                                    <wbr>
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
-                                        <path
-                                            d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z">
-                                        </path>
-                                    </svg>
-                                </button>
                             </div>
                             <a href="{{ route('company.product.create') }}">
 

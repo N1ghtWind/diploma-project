@@ -16,52 +16,36 @@ import Pagination from "../components/Pagination.vue";
                 <span class="font-medium">{{ error }}</span>
             </div>
         </div>
-
-        <div class="bg-white by rounded-sm border border-slate-200">
-            <header class="mn mr flex gap-4 items-center">
-                <h2 class="g_ text-slate-800">
-                    All Users: <span class="yu gk">{{ user_count }}</span>
-                </h2>
-
-            </header>
-            <div>
-                <div class="lz">
-                    <table class="av oq">
-                        <thead class="gb g_ gq text-slate-500 hq ck cx border-slate-200">
-                            <tr>
-                                <th class="v_ wk xe vm co ut">
-                                    <span class="tc">Favourite</span>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_ text-center">ID</div>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_ text-center">Picture</div>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_ text-center">Name</div>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_">Email verification date</div>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_">Registration date:</div>
-                                </th>
-                                <th class="v_ wk xe vm co">
-                                    <div class="g_">User type:</div>
-                                </th>
-                                <th class="v_ wk xe vm co"><span class="tc">Menu</span></th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm lg lb">
-                            <tr v-for="(user, index) in users.data" :key="index">
-                                <UserItem :user="user" />
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <header class="mn mr flex gap-4 items-center bg-gray-900">
+            <h2 class="g_ text-slate-200"> All Users: <span class="yu gk">9</span></h2>
+        </header>
+        <div class='overflow-x-auto w-full'>
+            <table class='mx-auto whitespace-nowrap m-0 w-full bg-white divide-y divide-gray-300 overflow-hidden'>
+                <thead class="bg-gray-900">
+                    <!-- ID
+                    PICTURE
+                    NAME
+                    EMAIL VERIFICATION DATE
+                    REGISTRATION DATE:
+                    USER TYPE: -->
+                    <tr class="text-white text-left">
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> ID </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> User </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Picture </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Email verification date </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Registration date </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> User type </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4"> </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr v-for="(user, index) in users.data" :key="index">
+                        <UserItem :user="user" />
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
         <Pagination :links="users.links" class="mt-6 flex justify-center"></Pagination>
 
     </Layout>

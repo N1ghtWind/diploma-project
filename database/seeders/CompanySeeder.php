@@ -15,9 +15,5 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        Company::create([
-            'name' => 'Benu',
-            'company_logo' => 'logo.jpg',
-        ]);
     }
 }

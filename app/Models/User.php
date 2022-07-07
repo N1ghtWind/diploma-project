@@ -91,6 +91,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasMany(Product::class);
     }
 
+    public function with_trashed_products() {
+        return $this->hasMany(Product::class)->withTrashed();
+    }
+
     public function address()
     {
         return $this->hasOne(Address::class);

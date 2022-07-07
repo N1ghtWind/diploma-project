@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         Inertia::setRootView('admin');
         $css = asset('css/custom-3.css');
-        $users = User::with('userable.media','address')->paginate(3);
+        $users = User::with('userable.media','address','media')->paginate(3);
         return Inertia::render('Admin/Users',[
             'users' => $users,
             'user_count' => User::count(),

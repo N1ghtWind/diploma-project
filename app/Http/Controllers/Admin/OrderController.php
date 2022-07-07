@@ -20,7 +20,7 @@ class OrderController extends Controller
         $css = asset('css/custom-2.css');
 
         $carriers = Carrier::with('media', 'user')->paginate(3, ['*'], 'carriers')->withQueryString();
-        $orders = Order::with('products_with_trashed.media', 'user')->paginate(3, ['*'], 'orders')->withQueryString();
+        $orders = Order::with('products_with_trashed.media', 'user')->paginate(5, ['*'], 'orders')->withQueryString();
         $orders_count = Order::count();
         return Inertia::render('Admin/Orders', [
             'orders' => $orders,

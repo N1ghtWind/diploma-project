@@ -184,8 +184,8 @@
                                         style="border-bottom: 1px solid #126de5;">&nbsp; </td>
                                     <td rowspan="2" class="o_sans o_text o_text-secondary o_px o_py" align="center"
                                         style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 16px;line-height: 24px;color: #424651;padding-left: 16px;padding-right: 16px;padding-top: 16px;padding-bottom: 16px;">
-                                        <img src="{{ asset('assets/logo.png') }}" width="48"
-                                            height="48" alt=""
+                                        <img src="{{ asset('assets/logo.png') }}" width="48" height="48"
+                                            alt=""
                                             style="max-width: 48px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;">
                                     </td>
                                     <td class="o_bb-primary" height="40" width="32"
@@ -204,8 +204,7 @@
                         <h2 class="o_heading o_text-dark o_mb-xxs"
                             style="font-family: Helvetica, Arial, sans-serif;font-weight: bold;margin-top: 0px;margin-bottom: 4px;color: #242b3d;font-size: 30px;line-height: 39px;">
                             Thank you for your purchase!</h2>
-                        <p style="margin-top: 0px;margin-bottom: 0px;">Rooster penguin fraudulent taped much otter ouch
-                            excluding that resigned among that proved far rattlesnake fitted</p>
+                        <p style="margin-top: 0px;margin-bottom: 0px;">Your order soon will be associated to one of our carrier, please be patient!</p>
                     </div>
                     <!--[if mso]></td></tr></table><![endif]-->
                 </td>
@@ -275,7 +274,8 @@
                                 <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-primary"
                                         href="https://example.com/"
                                         style="text-decoration: none;outline: none;color: #126de5;"><img
-                                            src="{{ $product->media()->first()->getFullUrl() }}" width="84" height="84" alt=""
+                                            src="{{ $product->media()->first()->getFullUrl() }}" width="84"
+                                            height="84" alt=""
                                             style="max-width: 84px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a>
                                 </p>
                             </div>
@@ -290,7 +290,8 @@
                                     style="font-family: Helvetica, Arial, sans-serif;font-weight: bold;margin-top: 0px;margin-bottom: 4px;color: #242b3d;font-size: 18px;line-height: 23px;">
                                     {{ $product->name }}</h4>
                                 <p class="o_text-secondary o_mb-xs"
-                                    style="color: #424651;margin-top: 0px;margin-bottom: 8px;">{{ $product->description }}</p>
+                                    style="color: #424651;margin-top: 0px;margin-bottom: 8px;">
+                                    {{ $product->description }}</p>
                             </div>
                         </div>
                         <!--[if mso]></td><td width="100" align="right" valign="top" style="padding: 0px 8px;"><![endif]-->
@@ -433,7 +434,7 @@
                             style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 14px;line-height: 21px;color: #424651;text-align: left;padding-left: 8px;padding-right: 8px;">
                             <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;"><strong>Payment
                                     Method</strong></p>
-                            <p style="margin-top: 0px;margin-bottom: 0px;">Check / money order</p>
+                            <p style="margin-top: 0px;margin-bottom: 0px;">Credit Card</p>
                         </div>
                     </div>
                     <!--[if mso]></td><td width="300" align="left" valign="top" style="padding: 0px 8px;"><![endif]-->
@@ -444,14 +445,13 @@
                             style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 14px;line-height: 21px;color: #424651;text-align: left;padding-left: 8px;padding-right: 8px;">
                             <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;"><strong>Shipping
                                     Information</strong></p>
-                            <p class="o_mb-md" style="margin-top: 0px;margin-bottom: 24px;">{{ $user->address->full_name }}<br>
+                            <p class="o_mb-md" style="margin-top: 0px;margin-bottom: 24px;">
+                                {{ $user->address->full_name }}<br>
                                 {{ $user->address->address }}<br>
                                 {{ $user->address->city }}<br>
                                 {{ $user->address->zip }}</p>
-                                {{ $user->address->phone }}</p>
-                            <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;"><strong>Shipping
-                                    Method</strong></p>
-                            <p style="margin-top: 0px;margin-bottom: 0px;">FedEx</p>
+                            {{ $user->address->phone }}</p>
+
                         </div>
                     </div>
                     <!--[if mso]></td></tr></table><![endif]-->
@@ -482,8 +482,7 @@
                             style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 14px;line-height: 21px;color: #82899a;text-align: left;padding-left: 8px;padding-right: 8px;">
                             <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;">©2018 SimpleApp Inc. All
                                 rights reserved.</p>
-                            <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;">2603 Woodridge Lane,
-                                Memphis, TN 38104, USA</p>
+                            <p class="o_mb-xs" style="margin-top: 0px;margin-bottom: 8px;"></p>
                             <p style="margin-top: 0px;margin-bottom: 0px;">
                                 <a class="o_text-light o_underline" href="https://example.com/"
                                     style="text-decoration: underline;outline: none;color: #82899a;">Help Center</a>
@@ -505,26 +504,6 @@
                         <div class="o_px-xs o_sans o_text-xs o_text-light o_right o_xs-center"
                             style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 14px;line-height: 21px;color: #82899a;text-align: right;padding-left: 8px;padding-right: 8px;">
                             <p style="margin-top: 0px;margin-bottom: 0px;">
-                                <a class="o_text-light" href="https://example.com/"
-                                    style="text-decoration: none;outline: none;color: #82899a;"><img
-                                        src="images/facebook-light.png" width="36" height="36" alt="fb"
-                                        style="max-width: 36px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a><span>
-                                    &nbsp;</span>
-                                <a class="o_text-light" href="https://example.com/"
-                                    style="text-decoration: none;outline: none;color: #82899a;"><img
-                                        src="images/twitter-light.png" width="36" height="36" alt="tw"
-                                        style="max-width: 36px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a><span>
-                                    &nbsp;</span>
-                                <a class="o_text-light" href="https://example.com/"
-                                    style="text-decoration: none;outline: none;color: #82899a;"><img
-                                        src="images/instagram-light.png" width="36" height="36"
-                                        alt="ig"
-                                        style="max-width: 36px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a><span>
-                                    &nbsp;</span>
-                                <a class="o_text-light" href="https://example.com/"
-                                    style="text-decoration: none;outline: none;color: #82899a;"><img
-                                        src="images/snapchat-light.png" width="36" height="36" alt="sc"
-                                        style="max-width: 36px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a>
                             </p>
                         </div>
                     </div>

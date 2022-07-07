@@ -26,7 +26,7 @@ class ProductController extends Controller
         $userId = auth()->user()->id; // or any string represents user identifier
         $cartItems = Cart::session($userId)->getContent();
 
-        $prdoucts = Product::where('status', 'active')->with('media')->get();
+        $prdoucts = Product::where('status', 'active')->with('media','user.userable.media','category')->get();
 
 
 
@@ -35,7 +35,7 @@ class ProductController extends Controller
             $term = trim(request()->query('search'));
 
             $prdoucts = Product::search($term)->where('status', 'active')->query(function ($query) {
-                $query->with('media');
+                $query->with('media','user.userable.media','category');
             })->get();
             return Inertia::render('Products/Index', ['products' => $prdoucts, 'CartItems' => $cartItems]);
         }

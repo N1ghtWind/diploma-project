@@ -1,16 +1,16 @@
 <template>
-  <div class="py-12">
-    <div class="w-full mx-auto m-3 max-w-7xl bg-white md:p-6 lg:p-12">
-      <div class="header flex items-end justify-between mb-12">
-        <div class="title">
-          <p class="text-4xl font-bold text-gray-800 mb-4">Products</p>
+    <div class="py-12">
+        <div class="w-full mx-auto m-3 max-w-7xl bg-white md:p-6 lg:p-12">
+            <div class="header flex items-end justify-between mb-12">
+                <div class="title">
+                    <p class="text-4xl font-bold text-gray-800 mb-4">Products</p>
 
-          <p class="text-2xl font-light text-gray-400">
-            Here you can see the available products by the companies
-          </p>
-        </div>
-        <div class="text-end">
-          <div class="
+                    <p class="text-2xl font-light text-gray-400">
+                        Here you can see the available products by the companies
+                    </p>
+                </div>
+                <div class="text-end">
+                    <div class="
               flex flex-col
               md:flex-row
               w-3/4
@@ -21,12 +21,8 @@
               md:space-y-0
               justify-center
             ">
-            <div class="relative">
-              <input
-                type="text"
-                v-model="searched_term"
-                id='"form-subscribe-Search'
-                class="
+                        <div class="relative">
+                            <input type="text" v-model="searched_term" id='"form-subscribe-Search' class="
                   rounded-lg
                   flex-1
                   appearance-none
@@ -43,13 +39,9 @@
                   focus:ring-2
                   focus:ring-purple-600
                   focus:border-transparent
-                "
-                placeholder="Search something..."
-              />
-            </div>
-            <button
-              @click="search"
-              class="
+                " placeholder="Search something..." />
+                        </div>
+                        <button @click="search" class="
                 flex-shrink-0
                 px-4
                 py-2
@@ -65,25 +57,23 @@
                 focus:ring-purple-500
                 focus:ring-offset-2
                 focus:ring-offset-purple-200
-              "
-            >
-              Search
-            </button>
-          </div>
-        </div>
-      </div>
+              ">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-      <div v-if="!products.length">
-        <h1 class="text-2xl font-bold text-gray-800 text-center">
-          Nothing was found 😥
-        </h1>
-      </div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
-        <div v-for="(product, index) in products" :key="index">
-          <form class="h-full" :action="route('products.show', { product: product.id })">
-            <button class="h-full" type="submit">
-              <div
-                class="
+            <div v-if="!products.length">
+                <h1 class="text-2xl font-bold text-gray-800 text-center">
+                    Nothing was found 😥
+                </h1>
+            </div>
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+                <div v-for="(product, index) in products" :key="index">
+                    <form class="h-full" :action="route('products.show', { product: product.id })">
+                        <button class="h-full" type="submit">
+                            <div class="
                   h-full
                   overflow-hidden
                   border
@@ -99,25 +89,20 @@
                   lg:w-96
                   cursor-pointer
                   m-auto
-                "
-              >
-                <img
-                  alt="blog photo"
-                  :src="product.media[0].original_url"
-                  class="object-cover rounded-xl w-64 h-64 m-auto"
-                />
-                <div class="bg-white w-full p-4">
-                  <p class="text-indigo-500 text-md font-medium">
-                    €{{ product.price }}
-                  </p>
-                  <p class="text-gray-800 text-xl font-medium mb-2">
-                    {{ product.name }}
-                  </p>
-                  <p class="text-gray-400 font-light text-md">
-                    {{ product.description }}
-                  </p>
-                  <span
-                    class="
+                ">
+                                <img alt="blog photo" :src="product.media[0].original_url"
+                                    class="object-cover rounded-xl w-64 h-64 m-auto" />
+                                <div class="bg-white w-full p-4">
+                                    <p class="text-indigo-500 text-md font-medium">
+                                        €{{ product.price }}
+                                    </p>
+                                    <p class="text-gray-800 text-xl font-medium mb-2">
+                                        {{ product.name }}
+                                    </p>
+                                    <p class="text-gray-400 font-light text-md">
+                                        {{ truncate(product.description, 40) }}
+                                    </p>
+                                    <span class="
                       my-2
                       block
                       max-w-fit
@@ -125,74 +110,78 @@
                       p-1
                       rounded-lg
                       text-white
-                    "
-                    >{{ product.quantity_unit }}</span
-                  >
-                  <div class="flex justify-between items-center mt-4">
-                    <p class="text-gray-800">
-                      Listed date:
-                      <span class="text-gray-400">{{
-                        product.created_at
-                      }}</span>
-                    </p>
-                    <a href="#" class="block relative">
-                      <img
-                        alt="profil"
-                        :src="product.media[0].original_url"
-                        class="mx-auto object-cover w-20"
-                      />
-                    </a>
-                  </div>
-                  <Basket :checkHowManyProductInBasket="passQuantity(product.id)" :product="product"></Basket>
+                    ">{{ product.quantity_unit }}</span>
+                                    <div class="flex justify-between items-center mt-4">
+                                        <div>
+                                            <p class="text-gray-800 text-left">{{ product?.category?.name }} </p>
+                                            <p class="text-gray-800">
+                                                Listed date:
+                                                <span class="text-gray-400">{{
+                                                        product.created_at
+                                                }}</span>
+                                            </p>
+                                        </div>
+                                        <a href="#" class="block relative">
+                                            <img alt="profil" :src="product?.user?.userable?.media[0]?.original_url"
+                                                class="mx-auto object-cover w-20" />
+                                        </a>
+                                    </div>
+                                    <Basket :checkHowManyProductInBasket="passQuantity(product.id)" :product="product">
+                                    </Basket>
+                                </div>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-              </div>
-            </button>
-          </form>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
 import Basket from "../components/AddToCartButton.vue";
 import { Inertia } from "@inertiajs/inertia";
 export default {
-  name: "DiplomaIndex",
-  props: {
-    auth: Object,
-    errors: Object,
-    flash: Object,
-    products: Array,
-    CartItems: Object,
-  },
-
-  components: { Basket },
-  data() {
-    return {
-        searched_term: "",
-    };
-  },
-
-  mounted() {},
-
-  methods: {
-    passQuantity(id) {
-
-      for (const [key, value] of Object.entries(this.CartItems)) {
-        if(value.id === id) {
-
-            return value.quantity;
-        }
-      }
-        return 0;
+    name: "DiplomaIndex",
+    props: {
+        auth: Object,
+        errors: Object,
+        flash: Object,
+        products: Array,
+        CartItems: Object,
     },
-    search() {
-        Inertia.get(route("products.index"), {
-            search: this.searched_term,
-        });
-    }
-  },
+
+    components: { Basket },
+    data() {
+        return {
+            searched_term: "",
+        };
+    },
+
+    mounted() { },
+
+    methods: {
+        passQuantity(id) {
+
+            for (const [key, value] of Object.entries(this.CartItems)) {
+                if (value.id === id) {
+
+                    return value.quantity;
+                }
+            }
+            return 0;
+        },
+        search() {
+            Inertia.get(route("products.index"), {
+                search: this.searched_term,
+            });
+        },
+
+        truncate(source, size) {
+            return source.length > size ? source.slice(0, size - 1) + "…" : source;
+        },
+
+    },
 };
 </script>
 
